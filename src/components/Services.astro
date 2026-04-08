@@ -1,0 +1,116 @@
+---
+import { 
+  Code2, 
+  BookOpen, 
+  Settings2, 
+  MonitorCog,
+  DownloadCloud,
+  Layout
+} from 'lucide-astro';
+
+const services = [
+    {
+        title: "Catálogos Digitales",
+        description: "Transforma tu lista de productos en una experiencia interactiva y fácil de compartir con tus clientes.",
+        icon: BookOpen,
+        color: "text-cyan-400 lg:text-gray-400 lg:group-hover:text-cyan-400",
+        glow: "bg-cyan-500/5 lg:bg-cyan-500/0 lg:group-hover:bg-cyan-500/5"
+    },
+    {
+        title: "Webs & Portafolios",
+        description: "Páginas modernas y rápidas para marcas personales o negocios que necesitan destacar visualmente.",
+        icon: Layout,
+        color: "text-pink-500 lg:text-gray-400 lg:group-hover:text-pink-500",
+        glow: "bg-pink-500/5 lg:bg-pink-500/0 lg:group-hover:bg-pink-500/5"
+    },
+    {
+        title: "Mantenimiento & Arreglo",
+        description: "Optimización de hardware y limpieza técnica para que tu PC vuelva a rendir como el primer día.",
+        icon: MonitorCog,
+        color: "text-blue-400 lg:text-gray-400 lg:group-hover:text-blue-400",
+        glow: "bg-blue-500/5 lg:bg-blue-500/0 lg:group-hover:bg-blue-500/5"
+    },
+    {
+        title: "Software & Aplicaciones",
+        description: "Instalación y configuración de programas, sistemas operativos y herramientas de trabajo.",
+        icon: DownloadCloud,
+        color: "text-purple-400 lg:text-gray-400 lg:group-hover:text-purple-400",
+        glow: "bg-purple-500/5 lg:bg-purple-500/0 lg:group-hover:bg-purple-500/5"
+    },
+    {
+        title: "Soporte Técnico IT",
+        description: "Asistencia rápida para resolver problemas de conexión, errores de sistema o dudas tecnológicas.",
+        icon: Settings2,
+        color: "text-emerald-400 lg:text-gray-400 lg:group-hover:text-emerald-400",
+        glow: "bg-emerald-500/5 lg:bg-emerald-500/0 lg:group-hover:bg-emerald-500/5"
+    },
+    {
+        title: "Landing Pages",
+        description: "Sitios de una sola página diseñados específicamente para convertir visitas en clientes potenciales.",
+        icon: Code2,
+        color: "text-yellow-400 lg:text-gray-400 lg:group-hover:text-yellow-400",
+        glow: "bg-yellow-500/5 lg:bg-yellow-500/0 lg:group-hover:bg-yellow-500/5"
+    }
+];
+---
+
+<section class="py-24 px-4 sm:px-6 lg:px-8 bg-[#050505] relative overflow-hidden" id="services-section">
+    <div class="absolute top-0 right-0 w-125 h-125 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-16 text-center sm:text-left">
+            <span class="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Capacidades</span>
+            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter">
+                Servicios <span class="text-gray-500 text-3xl md:text-4xl font-light">/ Tech & Web</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((service) => (
+                <div class="service-card group relative p-8 rounded-3xl border border-white/5 bg-white/2 hover:bg-white/5 lg:hover:border-white/10 transition-all duration-500 opacity-0 translate-y-8">
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class={`p-3 rounded-2xl bg-white/5 border border-white/10 transition-colors duration-500 ${service.color}`}>
+                                <service.icon size={28} strokeWidth={1.5} />
+                            </div>
+                        </div>
+                        
+                        <h3 class="text-white text-xl font-bold mb-3 tracking-tight">
+                            {service.title}
+                        </h3>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed font-light min-h-15">
+                            {service.description}
+                        </p>
+                    </div>
+
+                    {/* Resplandor de fondo adaptativo */}
+                    <div class={`absolute inset-0 rounded-3xl transition-all duration-500 pointer-events-none ${service.glow}`}></div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const initServices = () => {
+        gsap.to(".service-card", {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: "#services-section",
+                start: "top 75%",
+            }
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', initServices);
+    document.addEventListener('astro:page-load', initServices);
+</script>

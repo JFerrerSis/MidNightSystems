@@ -1,0 +1,54 @@
+---
+import { Languages, ChevronDown } from 'lucide-astro';
+
+const languages = [
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'it', label: 'Italiano', flag: '🇮🇹' }
+];
+---
+
+<div class="fixed top-6 right-6 z-50">
+  <div class="group relative">
+    <button 
+      id="lang-button"
+      class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 backdrop-blur-md rounded-full text-gray-300 hover:text-white hover:border-cyan-500/50 transition-all duration-300"
+    >
+      <Languages size={16} class="text-cyan-400" />
+      <span class="text-xs font-mono uppercase tracking-widest">ES</span>
+      <ChevronDown size={14} class="group-hover:rotate-180 transition-transform duration-300" />
+    </button>
+
+    <div 
+      id="lang-menu"
+      class="absolute right-0 mt-2 w-40 origin-top-right scale-95 opacity-0 invisible group-hover:scale-100 group-hover:opacity-100 group-hover:visible transition-all duration-200"
+    >
+      <div class="bg-[#0a0a0a] border border-white/10 rounded-2xl p-2 shadow-2xl backdrop-blur-xl">
+        {languages.map((lang) => (
+          <button
+            class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-gray-400 hover:bg-white/5 hover:text-cyan-400 transition-colors"
+            data-lang={lang.code}
+          >
+            <span>{lang.label}</span>
+            <span class="opacity-50">{lang.flag}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Lógica simple para manejar el cambio
+  const buttons = document.querySelectorAll('[data-lang]');
+  
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      console.log(`Cambiando a: ${lang}`);
+      // Aquí podrías redirigir si usas carpetas /en/ /es/
+      // o usar una librería de i18n
+      alert(`Idioma seleccionado: ${lang}. \n(Aquí conectaríamos tu lógica de traducción)`);
+    });
+  });
+</script>

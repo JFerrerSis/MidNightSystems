@@ -1,0 +1,120 @@
+---
+import { 
+  Mail, 
+  MessageCircle, 
+  Instagram, 
+  ArrowUpRight
+} from 'lucide-astro';
+
+// Extraemos las variables del entorno
+const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
+const emailAddress = import.meta.env.PUBLIC_EMAIL;
+const instagramUser = import.meta.env.PUBLIC_INSTAGRAM_USER;
+
+// Preparamos los textos para los enlaces (URL encoded)
+const waMsg = encodeURIComponent("Hola Jorge, vi tu portfolio en MidnightSystems y me gustaría consultar por un proyecto.");
+const mailSubject = encodeURIComponent("Consulta de Proyecto - MidnightSystems");
+
+const contactMethods = [
+    {
+        name: "WhatsApp",
+        label: "Chat Directo",
+        url: `https://wa.me/${whatsappNumber}?text=${waMsg}`,
+        icon: MessageCircle,
+        color: "text-emerald-400",
+        bg: "bg-emerald-500/5 lg:bg-transparent lg:group-hover:bg-emerald-500/5",
+        border: "border-white/5 lg:group-hover:border-emerald-500/20"
+    },
+    {
+        name: "Email",
+        label: "Propuestas Formales",
+        url: `mailto:${emailAddress}?subject=${mailSubject}`,
+        icon: Mail,
+        color: "text-cyan-400",
+        bg: "bg-cyan-500/5 lg:bg-transparent lg:group-hover:bg-cyan-500/5",
+        border: "border-white/5 lg:group-hover:border-cyan-500/20"
+    },
+    {
+        name: "Instagram",
+        label: "Mensaje Directo",
+        url: `https://instagram.com/${instagramUser}`,
+        icon: Instagram,
+        color: "text-pink-500",
+        bg: "bg-pink-500/5 lg:bg-transparent lg:group-hover:bg-pink-500/5",
+        border: "border-white/5 lg:group-hover:border-pink-500/20"
+    }
+];
+---
+
+<section class="py-24 px-4 sm:px-6 lg:px-8 bg-[#050505] relative" id="contact-section">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-16 text-center sm:text-left">
+            <span class="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Contacto</span>
+            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter">
+                ¿Listo para <span class="text-gray-500 text-3xl md:text-4xl font-light">conectar?</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {contactMethods.map((method) => (
+                <a 
+                    href={method.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class={`contact-card group relative p-8 rounded-3xl border ${method.border} ${method.bg} transition-all duration-500 opacity-0 translate-y-8`}
+                >
+                    <div class="relative z-10 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-20">
+                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:scale-110 ${method.color}`}>
+                                <method.icon size={32} strokeWidth={1.5} />
+                            </div>
+                            <div class="p-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                <ArrowUpRight class="text-white" size={20} />
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto">
+                            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 mb-2 block">
+                                {method.label}
+                            </span>
+                            <h3 class="text-white text-3xl font-bold tracking-tighter transition-colors duration-300">
+                                {method.name}
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-radial-gradient from-white to-transparent`}></div>
+                </a>
+            ))}
+        </div>
+    </div>
+</section>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const initContact = () => {
+        gsap.to(".contact-card", {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: "#contact-section",
+                start: "top 80%",
+            }
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', initContact);
+    document.addEventListener('astro:page-load', initContact);
+</script>
+
+<style>
+    .bg-radial-gradient {
+        background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, transparent 70%);
+    }
+</style>

@@ -1,11 +1,120 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import HeroSection from '../components/HeroSection.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import Services from '../components/Services.astro';
+import TechStack from '../components/TechStack.astro';
+import ContactSection from '../components/ContactSection.astro'; // <--- Nueva Sección
+import Footer from '../components/Footer.astro'; // <--- Nuevo Footer
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const companyName = 'MidnightSystems';
+const githubUser = 'JferrerSis'; // Tu usuario para el Hero y Projects
 ---
 
-<Layout>
-	<Welcome />
+<Layout title=`${companyName} | Digital Experience`>
+    <main class="relative w-full bg-[#050505] overflow-x-hidden">
+        
+        {/* HERO SECTION - Sticky Parallax */}
+        <section id="hero-wrapper" class="h-screen w-full sticky top-0 z-0 overflow-hidden">
+            <HeroSection companyName={companyName} githubUser={githubUser} />
+        </section>
+
+        <div id="content-container" class="relative z-10 bg-[#050505]">
+            
+            {/* PROYECTOS - Revelado desde el fondo */}
+            <div class="section-animate">
+                <ProjectsSection />
+            </div>
+
+            {/* SERVICIOS */}
+            <div class="section-animate mt-20">
+                <Services />
+            </div>
+
+            {/* TECH STACK - Marquee Infinito */}
+            <div class="section-animate">
+                <TechStack />
+            </div>
+            
+            {/* CONTACTO - Reemplaza al CTA anterior por ser más funcional */}
+            <div class="section-animate">
+                <ContactSection />
+            </div>
+
+            {/* FOOTER INDEPENDIENTE */}
+            <Footer />
+        </div>
+    </main>
 </Layout>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    
+    gsap.registerPlugin(ScrollTrigger);
+
+    const initScrollAnimations = () => {
+        // 1. Efecto Parallax y Desvanecimiento del Hero mejorado
+        gsap.to("#hero-wrapper", {
+            scrollTrigger: {
+                trigger: "#content-container",
+                start: "top bottom", 
+                end: "top top",    
+                scrub: true,       
+            },
+            y: 200,                
+            scale: 0.85,            
+            opacity: 0,            
+            filter: "blur(20px)",  
+            ease: "none"
+        });
+
+        // 2. Revelado suave de cada sección
+        const sections = document.querySelectorAll('.section-animate');
+        sections.forEach((section) => {
+            gsap.fromTo(
+                section,
+                { 
+                    autoAlpha: 0, 
+                    y: 80, 
+                    filter: "blur(10px)" 
+                },
+                {
+                    autoAlpha: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    duration: 1.5,
+                    ease: 'power4.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+    };
+
+    // Reinicializar en cada carga de página (Astro View Transitions)
+    document.addEventListener('DOMContentLoaded', initScrollAnimations);
+    document.addEventListener('astro:page-load', initScrollAnimations);
+</script>
+
+<style>
+    :global(html) {
+        background-color: #050505;
+        /* Evita saltos visuales en el scroll de GSAP */
+        overflow-x: hidden;
+    }
+
+    #content-container {
+        /* Añade una sombra interna para que el hero parezca que se desliza debajo */
+        box-shadow: 0 -50px 100px -20px rgba(0,0,0,0.5);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Mejora el suavizado de las animaciones en dispositivos de alta tasa de refresco */
+    .section-animate {
+        will-change: transform, opacity;
+    }
+</style>

@@ -1,0 +1,67 @@
+---
+import { Github, Instagram, Linkedin, Send, Cpu } from 'lucide-astro';
+
+const currentYear = new Date().getFullYear();
+const personalName = "Jorge Ferrer";
+---
+
+<footer class="bg-[#050505] pt-20 pb-10 px-4 sm:px-6 lg:px-8 border-t border-white/5 relative overflow-hidden">
+    {/* Efecto de luz ambiental muy sutil en las esquinas */}
+    <div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+    
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+            
+            {/* Columna Izquierda: Identidad */}
+            <div class="space-y-6 text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                        <Cpu size={18} class="text-cyan-400" />
+                    </div>
+                    <span class="text-white font-black tracking-tighter text-xl uppercase italic">
+                        Midnight<span class="text-gray-500 font-light">Systems</span>
+                    </span>
+                </div>
+                <p class="text-gray-500 text-sm font-light leading-relaxed max-w-xs mx-auto md:mx-0">
+                    Elevando el estándar digital desde Venezuela. Diseño minimalista enfocado en resultados.
+                </p>
+            </div>
+
+            {/* Columna Derecha: Enlaces y Status */}
+            <div class="flex flex-col items-center md:items-end justify-between gap-8">
+                <div class="flex gap-6">
+                    <a href="https://github.com/JferrerSis" target="_blank" class="text-gray-500 hover:text-white transition-colors duration-300">
+                        <Github size={20} />
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-500 hover:text-pink-500 transition-colors duration-300">
+                        <Instagram size={20} />
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-500 hover:text-blue-400 transition-colors duration-300">
+                        <Linkedin size={20} />
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                    <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]"></div>
+                    <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">
+                        Available for new projects
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        {/* Barra inferior de Copyright */}
+        <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="text-gray-600 text-[9px] font-mono uppercase tracking-[0.3em]">
+                © {currentYear} • {personalName} • All Rights Reserved
+            </div>
+            
+            <div class="flex items-center gap-2 group cursor-default">
+                <Send size={12} class="text-gray-600 group-hover:text-cyan-400 transition-colors" />
+                <span class="text-gray-600 group-hover:text-gray-400 text-[9px] font-mono uppercase tracking-[0.3em] transition-colors">
+                    Handcrafted in Venezuela
+                </span>
+            </div>
+        </div>
+    </div>
+</footer class="bg-[#050505] pt-20 pb-10 px-4 sm:px-6 lg:px-8 border-t border-white/5">
