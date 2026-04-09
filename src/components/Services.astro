@@ -16,8 +16,8 @@ const services = [
         description: "Experiencias interactivas para mostrar tus productos con enlaces de compra directos.",
         icon: BookOpen,
         color: "text-cyan-400",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(34,211,238,0.2)]",
-        border: "group-hover:border-cyan-500/50",
+        bgGlow: "bg-cyan-500/10",
+        borderActive: "border-cyan-500/50",
         whatsappMsg: "Hola! Me interesa información sobre los Catálogos Digitales."
     },
     {
@@ -26,8 +26,8 @@ const services = [
         description: "Sitios de alto impacto visual diseñados para convertir y posicionar tu marca personal.",
         icon: Layout,
         color: "text-pink-500",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(236,72,153,0.2)]",
-        border: "group-hover:border-pink-500/50",
+        bgGlow: "bg-pink-500/10",
+        borderActive: "border-pink-500/50",
         whatsappMsg: "Hola! Quisiera cotizar una página web o portafolio."
     },
     {
@@ -36,8 +36,8 @@ const services = [
         description: "Resolución de errores, configuración de redes y asistencia remota o presencial.",
         icon: Settings2,
         color: "text-emerald-400",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(52,211,153,0.2)]",
-        border: "group-hover:border-emerald-500/50",
+        bgGlow: "bg-emerald-500/10",
+        borderActive: "border-emerald-500/50",
         whatsappMsg: "Hola! Necesito soporte técnico para mi equipo."
     },
     {
@@ -46,8 +46,8 @@ const services = [
         description: "Optimización profunda y limpieza de hardware para recuperar la velocidad de tu PC.",
         icon: MonitorCog,
         color: "text-blue-400",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(96,165,250,0.2)]",
-        border: "group-hover:border-blue-500/50",
+        bgGlow: "bg-blue-500/10",
+        borderActive: "border-blue-500/50",
         whatsappMsg: "Hola! Quisiera agendar un mantenimiento para mi PC."
     },
     {
@@ -56,8 +56,8 @@ const services = [
         description: "Instalación limpia de Windows, Office y herramientas profesionales sin errores.",
         icon: DownloadCloud,
         color: "text-purple-400",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(192,132,252,0.2)]",
-        border: "group-hover:border-purple-500/50",
+        bgGlow: "bg-purple-500/10",
+        borderActive: "border-purple-500/50",
         whatsappMsg: "Hola! Necesito ayuda instalando software o un sistema operativo."
     },
     {
@@ -66,8 +66,8 @@ const services = [
         description: "Estructuras de una sola página optimizadas para campañas de ventas específicas.",
         icon: Code2,
         color: "text-yellow-400",
-        shadow: "group-hover:shadow-[0_0_40px_-10px_rgba(250,204,21,0.2)]",
-        border: "group-hover:border-yellow-500/50",
+        bgGlow: "bg-yellow-500/10",
+        borderActive: "border-yellow-500/50",
         whatsappMsg: "Hola! Me interesa una Landing Page para mi negocio."
     }
 ];
@@ -75,48 +75,58 @@ const services = [
 const whatsappBase = "https://wa.me/584240000000?text=";
 ---
 
-<section class="py-24 px-4 sm:px-6 lg:px-8 bg-[#050505] relative overflow-hidden" id="services-section">
-    <div class="max-w-7xl mx-auto">
-        <div class="mb-16 text-center lg:text-left reveal-center">
-            <span class="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Especialidades</span>
-            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter">
-                Servicios <span class="text-gray-600 font-light">Efectivos.</span>
+<section class="py-32 px-4 sm:px-6 lg:px-8 bg-[#0a0a0b] relative overflow-hidden" id="services-section">
+    <div class="absolute top-0 right-0 w-125 h-125 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none anim-glow"></div>
+    <div class="absolute bottom-0 left-0 w-125 h-125 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none anim-glow"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="mb-20 space-y-4" id="services-header">
+            <div class="flex items-center gap-3 overflow-hidden">
+                <span class="w-12 h-px bg-cyan-500 anim-line"></span>
+                <span class="text-cyan-500 font-mono text-[10px] uppercase tracking-[0.5em] anim-tag">Especialidades</span>
+            </div>
+            <h2 class="text-white text-5xl md:text-6xl font-black tracking-tighter uppercase italic anim-title">
+                Servicios <span class="text-white/10">Expertos</span>
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="services-grid">
             {services.map((service) => (
-                <div class={`service-card group relative p-px rounded-3xl overflow-hidden border border-white/5 bg-white/2 transition-all duration-700 ease-out ${service.shadow} ${service.border}`}>
+                <div class={`service-card group relative p-px rounded-[2.5rem] bg-white/5 border border-white/10 transition-all duration-500 hover:scale-[1.02] hover:${service.borderActive}`}>
                     
-                    <div class="spotlight pointer-events-none absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
-                         style="background: radial-gradient(600px circle at var(--x) var(--y), rgba(255,255,255,0.06), transparent 40%);">
-                    </div>
+                    <div class={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl ${service.bgGlow} pointer-events-none`}></div>
 
-                    <div class="relative z-10 p-8 flex flex-col h-full bg-[#080808] rounded-[calc(1.5rem-1px)]">
-                        <div class="flex justify-between items-start mb-8">
-                            <div class={`p-3 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:scale-110 ${service.color}`}>
-                                <service.icon size={24} strokeWidth={1.5} />
+                    <div class="relative z-10 p-10 flex flex-col h-full bg-[#111112]/90 backdrop-blur-xl rounded-[calc(2.5rem-1px)] overflow-hidden">
+                        
+                        <div class={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 ${service.bgGlow.replace('/10', '/40')}`}></div>
+
+                        <div class="flex justify-between items-start mb-10">
+                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 shadow-2xl transition-all duration-500 group-hover:rotate-10 group-hover:scale-110 ${service.color}`}>
+                                <service.icon size={28} strokeWidth={1.5} />
                             </div>
-                            <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest border border-white/5 px-2 py-1 rounded">
+                            <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
                                 {service.category}
                             </span>
                         </div>
                         
-                        <h3 class="text-white text-xl font-bold mb-3 tracking-tight">
+                        <h3 class="text-white text-2xl font-bold mb-4 tracking-tight group-hover:text-cyan-300 transition-colors">
                             {service.title}
                         </h3>
                         
-                        <p class="text-gray-400 text-sm leading-relaxed font-light mb-8 grow">
+                        <p class="text-gray-400 text-sm leading-relaxed font-light mb-10 grow italic">
                             {service.description}
                         </p>
 
                         <a 
                             href={`${whatsappBase}${encodeURIComponent(service.whatsappMsg)}`}
                             target="_blank"
-                            class={`inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all ${service.color} lg:text-white lg:group-hover:${service.color}`}
+                            class={`inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all no-underline
+                            ${service.color} sm:text-gray-400 sm:group-hover:${service.color}`}
                         >
-                            Consultar Ahora
-                            <ArrowUpRight size={14} class="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            <span>Consultar Ahora</span>
+                            <div class={`p-2 rounded-full bg-white/5 group-hover:bg-current transition-all`}>
+                                <ArrowUpRight size={14} class="group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -131,79 +141,67 @@ const whatsappBase = "https://wa.me/584240000000?text=";
     gsap.registerPlugin(ScrollTrigger);
 
     function initServices() {
-        const cards = document.querySelectorAll(".service-card");
-        
-        cards.forEach((card) => {
-            // 1. ANIMACIÓN DE ENTRADA (Aparecer desde el medio)
-            // Cambiamos toggleActions para que maneje la re-entrada al subir
-            gsap.fromTo(card, 
-                { 
-                    opacity: 0, 
-                    scale: 0.5, 
-                    filter: "blur(10px)"
-                },
-                {
-                    opacity: 1,
-                    scale: 1,
-                    filter: "blur(0px)",
-                    duration: 1.2,
-                    ease: "elastic.out(1, 0.8)",
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 90%",
-                        end: "bottom 10%",
-                        // play: al bajar, entra
-                        // reverse: al subir y salir por abajo, se oculta
-                        // restart: al subir y re-entrar desde abajo, vuelve a animar
-                        toggleActions: "play reverse restart reverse" 
-                    }
-                }
-            );
+        // 1. Animación del Header
+        const headerTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#services-header",
+                start: "top 85%",
+            }
+        });
 
-            // 2. ANIMACIÓN DE SALIDA (Se aleja al seguir bajando)
-            // Esta se mantiene con scrub porque es un efecto ligado al movimiento del mouse/scroll
-            gsap.to(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 15%", // Empieza a desvanecerse antes de tocar el tope
-                    end: "top top",
-                    scrub: true,
-                },
-                scale: 0.6,
-                opacity: 0,
-                filter: "blur(20px)",
-                y: -100, // Añadimos un pequeño desplazamiento hacia arriba para el efecto de alejamiento
-                ease: "none"
-            });
+        headerTl
+            .from(".anim-line", { width: 0, duration: 1, ease: "expo.out" })
+            .from(".anim-tag", { x: -20, opacity: 0, duration: 0.8 }, "-=0.6")
+            .from(".anim-title", { y: 30, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.6");
 
-            // 3. LÓGICA SPOTLIGHT (Sin cambios)
-            card.addEventListener("mousemove", (e: any) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                (card as HTMLElement).style.setProperty("--x", `${x}px`);
-                (card as HTMLElement).style.setProperty("--y", `${y}px`);
-            });
+        // 2. Animación de las Tarjetas (Entrada en cascada)
+        gsap.from(".service-card", {
+            scrollTrigger: {
+                trigger: "#services-grid",
+                start: "top 80%",
+            },
+            y: 60,
+            opacity: 0,
+            scale: 0.9,
+            stagger: 0.15,
+            duration: 1.2,
+            ease: "expo.out",
+        });
+
+        // 3. Parallax sutil de los fondos de luces
+        gsap.to(".anim-glow", {
+            y: -50,
+            x: 30,
+            duration: 10,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
         });
     }
 
-    window.addEventListener('load', initServices);
     document.addEventListener('astro:page-load', initServices);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initServices();
+    }
 </script>
 
 <style>
     .service-card {
-        will-change: transform, opacity, filter;
-        /* CRÍTICO: Abre desde el centro exacto */
-        transform-origin: center center;
-    }
-    
-    .reveal-center {
-        transform-origin: center;
+        will-change: transform, opacity;
     }
 
-    .spotlight {
-        --x: 0px;
-        --y: 0px;
+    /* Efecto de cristal esmerilado solo en hover para PC */
+    @media (min-width: 1024px) {
+        .service-card:hover .backdrop-blur-xl {
+            backdrop-blur: 40px;
+        }
+    }
+
+    /* En móvil, los iconos y textos de acción tienen color siempre para guiar el ojo */
+    @media (max-width: 640px) {
+        .service-card {
+            background: #111112;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
     }
 </style>
