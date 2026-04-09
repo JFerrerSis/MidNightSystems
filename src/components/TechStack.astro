@@ -1,38 +1,34 @@
 ---
-import { 
-  Cpu, Code2, Globe, Database, Terminal, Layers, 
-  Settings, Zap, Monitor, ShieldCheck, Wrench, HardDrive,
-  Server
-} from 'lucide-astro';
+import { Database, Monitor, Terminal, Cpu, ShieldCheck, Github } from "lucide-astro";
 
 const groups = [
   {
     category: "Desarrollo Frontend",
     items: [
-      { name: "Astro", icon: Code2, color: "text-orange-500" },
-      { name: "React", icon: Cpu, color: "text-blue-400" },
-      { name: "Tailwind", icon: Layers, color: "text-cyan-400" },
-      { name: "GSAP", icon: Globe, color: "text-green-400" },
-    ]
+      { name: "Astro", logo: "https://cdn.simpleicons.org/astro/white", glow: "#ff5d01", isLucide: false },
+      { name: "React", logo: "https://cdn.simpleicons.org/react/61DAFB", glow: "#61DAFB", isLucide: false },
+      { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4", glow: "#06B6D4", isLucide: false },
+      { name: "JavaScript", logo: "https://cdn.simpleicons.org/javascript/F7DF1E", glow: "#F7DF1E", isLucide: false },
+    ],
   },
   {
     category: "Backend & Core",
     items: [
-      { name: "Bun", icon: Zap, color: "text-orange-200" },
-      { name: "Next.js", icon: Globe, color: "text-white" },
-      { name: "SQL Server", icon: Database, color: "text-red-500" },
-      { name: "PostgreSQL", icon: Server, color: "text-blue-300" },
-    ]
+      { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs/white", glow: "#ffffff", isLucide: false },
+      { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs/339933", glow: "#339933", isLucide: false },
+      { name: "SQL Server", logo: Database, glow: "#CC2927", isLucide: true, color: "text-[#CC2927]" },
+      { name: "PostgreSQL", logo: "https://cdn.simpleicons.org/postgresql/4169E1", glow: "#4169E1", isLucide: false },
+    ],
   },
   {
-    category: "Soporte IT & Hardware",
+    category: "Soporte IT & Sistemas",
     items: [
-      { name: "Mantenimiento", icon: Wrench, color: "text-red-400" },
-      { name: "Sistemas OS", icon: Monitor, color: "text-blue-500" },
-      { name: "Diagnóstico", icon: ShieldCheck, color: "text-emerald-500" },
-      { name: "Hardware", icon: HardDrive, color: "text-purple-400" },
-    ]
-  }
+      { name: "Windows Server", logo: Monitor, glow: "#0078D4", isLucide: true, color: "text-[#0078D4]" },
+      { name: "Linux/Ubuntu", logo: "https://cdn.simpleicons.org/ubuntu/E95420", glow: "#E95420", isLucide: false },
+      { name: "Redes & Seg.", logo: ShieldCheck, glow: "#10b981", isLucide: true, color: "text-[#10b981]" },
+      { name: "Hardware/Mantenim.", logo: Cpu, glow: "#f59e0b", isLucide: true, color: "text-[#f59e0b]" },
+    ],
+  },
 ];
 ---
 
@@ -41,7 +37,6 @@ const groups = [
   <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
   <div class="max-w-6xl mx-auto relative z-10">
-    
     <div class="mb-20 overflow-hidden" id="tech-header">
       <div class="flex items-center gap-3 mb-4 anim-header-tech">
         <span class="w-8 h-px bg-pink-500"></span>
@@ -57,19 +52,32 @@ const groups = [
         <div class="tech-group">
           <h3 class="text-gray-500 font-mono text-[10px] uppercase tracking-[0.4em] mb-12 flex items-center gap-4">
             <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent line-l"></span>
-            <span class="px-4 opacity-0 translate-y-4 category-title">{group.category}</span>
+            <span class="px-4 opacity-0 translate-y-4 category-title italic">{group.category}</span>
             <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent line-r"></span>
           </h3>
-          
+
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 perspective-1000">
             {group.items.map((item) => (
-              <div class="tech-card group relative p-6 rounded-2xl border border-white/5 bg-white/2 hover:bg-white/4 transition-colors duration-500 hover:border-white/20 overflow-hidden">
-                <div class="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div 
+                class="tech-card group relative p-6 rounded-2xl border border-white/10 bg-white/2 overflow-hidden transition-all duration-500"
+                style={`--glow-color: ${item.glow}`}
+              >
+                <div class="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500" />
+                
                 <div class="flex flex-col items-center gap-4 relative z-10">
-                  <div class={`p-3 rounded-xl bg-white/5 border border-white/10 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-xl ${item.color}`}>
-                    <item.icon size={28} strokeWidth={1.5} />
+                  <div class="p-3 rounded-xl bg-white/5 border border-white/10 transition-all duration-500 sm:group-hover:scale-110 sm:group-hover:-rotate-3 icon-container">
+                    {item.isLucide ? (
+                      <item.logo class={`w-8 h-8 ${item.color || ''}`} strokeWidth={1.5} />
+                    ) : (
+                      <img
+                        src={item.logo as string}
+                        alt={item.name}
+                        class="w-8 h-8 object-contain transition-all duration-500 filter-none sm:filter sm:grayscale sm:brightness-150 sm:group-hover:grayscale-0 sm:group-hover:brightness-100"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
-                  <span class="text-gray-400 group-hover:text-white text-sm font-semibold tracking-wide transition-colors">
+                  <span class="text-white sm:text-gray-400 sm:group-hover:text-white text-[10px] font-mono text-center uppercase tracking-widest transition-colors">
                     {item.name}
                   </span>
                 </div>
@@ -83,12 +91,33 @@ const groups = [
 </section>
 
 <style>
-  .stroke-text {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  .stroke-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); }
+  .tech-card { transform-style: preserve-3d; will-change: transform, opacity, filter; }
+
+  /* Glow dinámico en PC */
+  @media (min-width: 641px) {
+    .tech-card:hover {
+      border-color: var(--glow-color);
+      box-shadow: 0 0 20px -5px var(--glow-color);
+    }
+    .tech-card:hover .icon-container {
+      border-color: var(--glow-color);
+      box-shadow: 0 0 15px -5px var(--glow-color);
+    }
   }
-  .tech-card {
-    transform-style: preserve-3d;
-    will-change: transform, opacity, filter;
+  
+  /* Móvil: Brillo suave estático */
+  @media (max-width: 640px) {
+    .tech-card {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 12px -8px var(--glow-color);
+    }
+    .icon-container {
+      border-color: var(--glow-color);
+    }
+    .tech-card img {
+      filter: grayscale(0) brightness(1) !important;
+    }
   }
 </style>
 
@@ -99,77 +128,62 @@ const groups = [
   function init() {
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Animación de Cabecera (Unificada)
-    const headerAnims = document.querySelectorAll(".anim-header-tech");
-    gsap.from(headerAnims, {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power3.out",
+    gsap.from(".anim-header-tech", {
+      y: 30, opacity: 0, duration: 0.8, stagger: 0.1,
       scrollTrigger: {
         trigger: "#tech-header",
-        start: "top 90%",
-        toggleActions: "play reverse play reverse"
+        start: "top 95%",
+        end: "bottom 5%",
+        toggleActions: "play reverse play reverse",
       }
     });
 
-    // 2. Animación Grupos y Tarjetas (Pop desde el centro)
-    const groups = document.querySelectorAll(".tech-group");
-    groups.forEach((group) => {
+    const techGroups = document.querySelectorAll(".tech-group");
+    techGroups.forEach((group) => {
       const cards = group.querySelectorAll(".tech-card");
       const title = group.querySelector(".category-title");
-      
+
       gsap.to(title, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
+        opacity: 1, y: 0, duration: 0.6,
         scrollTrigger: {
           trigger: group,
           start: "top 90%",
           end: "bottom 10%",
-          toggleActions: "play reverse play reverse"
+          toggleActions: "play reverse play reverse",
         }
       });
 
-      gsap.fromTo(cards, 
-        { scale: 0, opacity: 0, filter: "blur(10px)", y: 40 },
+      gsap.fromTo(cards,
+        { scale: 0.8, opacity: 0, filter: "blur(10px)", y: 40 },
         {
           scale: 1, opacity: 1, filter: "blur(0px)", y: 0,
-          stagger: { each: 0.1, from: "center" },
-          duration: 0.8,
-          ease: "back.out(1.5)",
+          stagger: 0.1, duration: 0.7, ease: "back.out(1.2)",
           scrollTrigger: {
             trigger: group,
             start: "top 85%",
             end: "bottom 15%",
-            toggleActions: "play reverse play reverse"
+            toggleActions: "play reverse play reverse",
           }
         }
       );
     });
 
-    // 3. Efecto Tilt
-    document.querySelectorAll('.tech-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const ev = e as MouseEvent;
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const x = ev.clientX - rect.left - rect.width / 2;
-        const y = ev.clientY - rect.top - rect.height / 2;
-        gsap.to(card, {
-          rotateY: x * 0.15,
-          rotateX: -y * 0.15,
-          scale: 1.02,
-          duration: 0.4,
-          ease: "power2.out"
+    if (window.matchMedia("(min-width: 1024px)").matches) {
+      document.querySelectorAll(".tech-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const ev = e as MouseEvent;
+          const rect = (card as HTMLElement).getBoundingClientRect();
+          const x = ev.clientX - rect.left - rect.width / 2;
+          const y = ev.clientY - rect.top - rect.height / 2;
+          gsap.to(card, { rotateY: x * 0.1, rotateX: -y * 0.1, scale: 1.05, duration: 0.4 });
+        });
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6 });
         });
       });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6 });
-      });
-    });
+    }
   }
 
+  document.addEventListener("astro:page-load", init);
   init();
-  document.addEventListener('astro:page-load', init);
 </script>
