@@ -19,19 +19,19 @@ const companyName = 'MidnightSystems';
 
         <div id="content-container" class="relative z-10 bg-[#0a0a0b]">
             
-            <section class="pt-1 lg:pt-5 exit-animate">
+            <section class="pt-1 lg:pt-5">
                 <Services />
             </section>
 
-            <section class="py-1 lg:py-5 exit-animate">
+            <section class="py-1 lg:py-5">
                 <TechStack />
             </section>
 
-            <section class="exit-animate">
+            <section>
                 <ProjectsSection />
             </section>
             
-            <section class=" exit-animate">
+            <section class="py-1 lg:py-5">
                 <ContactSection />
             </section>
 
@@ -47,10 +47,11 @@ const companyName = 'MidnightSystems';
     gsap.registerPlugin(ScrollTrigger);
 
     const initGlobalAnimations = () => {
-        // Limpiar triggers previos para evitar duplicados en cambios de página
+        // Matamos todo lo anterior para que no haya basura en memoria
         ScrollTrigger.getAll().forEach(t => t.kill());
 
-        // 1. PARALLAX DEL HERO (Solo afecta al Hero al bajar)
+        // 1. ÚNICA ANIMACIÓN GLOBAL: El Hero desaparece al bajar
+        // Esto es necesario porque el Hero es "Sticky" y está fuera de los componentes
         gsap.to("#hero-wrapper", {
             scrollTrigger: {
                 trigger: "#content-container",
@@ -58,31 +59,9 @@ const companyName = 'MidnightSystems';
                 end: "top top",    
                 scrub: true,       
             },
-            y: 100,                
             scale: 0.9,            
             opacity: 0,            
-            filter: "blur(10px)",  
             ease: "none"
-        });
-
-        // 2. SOLO ANIMACIÓN DE SALIDA (Exit)
-        // No aplicamos animaciones de entrada aquí porque cada componente tiene la suya propia.
-        // Esto solo hace que la sección se desvanezca suavemente al alejarse por arriba.
-        const exitSections = document.querySelectorAll('.exit-animate');
-        
-        exitSections.forEach((section) => {
-            gsap.to(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top 5%",      
-                    end: "bottom top",   
-                    scrub: true,
-                },
-                opacity: 0,               
-                y: -40,                  
-                filter: "blur(10px)",
-                ease: "none"
-            });
         });
         
         ScrollTrigger.refresh();
@@ -90,7 +69,6 @@ const companyName = 'MidnightSystems';
 
     document.addEventListener('astro:page-load', initGlobalAnimations);
 
-    // Fallback manual
     if (document.readyState === 'complete') {
         initGlobalAnimations();
     }
@@ -106,10 +84,5 @@ const companyName = 'MidnightSystems';
         background-color: #0a0a0b;
         overflow: visible; 
         margin-top: -1px; 
-    }
-
-    /* Solo will-change para rendimiento, sin estados iniciales de opacidad */
-    .exit-animate {
-        will-change: transform, opacity, filter;
     }
 </style>

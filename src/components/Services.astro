@@ -1,12 +1,7 @@
 ---
 import { 
-  Code2, 
-  BookOpen, 
-  Settings2, 
-  MonitorCog,
-  DownloadCloud,
-  Layout,
-  ArrowUpRight
+  Code2, BookOpen, Settings2, MonitorCog,
+  DownloadCloud, Layout, ArrowUpRight
 } from 'lucide-astro';
 
 const services = [
@@ -76,55 +71,46 @@ const whatsappBase = "https://wa.me/584240000000?text=";
 ---
 
 <section class="py-32 px-4 sm:px-6 lg:px-8 bg-[#0a0a0b] relative overflow-hidden" id="services-section">
-    <div class="absolute top-0 right-0 w-125 h-125 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none anim-glow"></div>
-    <div class="absolute bottom-0 left-0 w-125 h-125 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none anim-glow"></div>
+    <div class="absolute top-0 right-0 w-125 h-125 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none anim-glow-bg"></div>
+    <div class="absolute bottom-0 left-0 w-125 h-125 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none anim-glow-bg"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
-        <div class="mb-20 space-y-4" id="services-header">
+        <div class="mb-24 space-y-4" id="services-header">
             <div class="flex items-center gap-3 overflow-hidden">
                 <span class="w-12 h-px bg-cyan-500 anim-line"></span>
                 <span class="text-cyan-500 font-mono text-[10px] uppercase tracking-[0.5em] anim-tag">Especialidades</span>
             </div>
-            <h2 class="text-white text-5xl md:text-6xl font-black tracking-tighter uppercase italic anim-title">
+            <h2 class="text-white text-5xl md:text-7xl font-black tracking-tighter uppercase italic anim-title leading-none">
                 Servicios <span class="text-white/10">Expertos</span>
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="services-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10" id="services-grid">
             {services.map((service) => (
                 <div class={`service-card group relative p-px rounded-[2.5rem] bg-white/5 border border-white/10 transition-all duration-500 hover:scale-[1.02] hover:${service.borderActive}`}>
-                    
                     <div class={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl ${service.bgGlow} pointer-events-none`}></div>
-
                     <div class="relative z-10 p-10 flex flex-col h-full bg-[#111112]/90 backdrop-blur-xl rounded-[calc(2.5rem-1px)] overflow-hidden">
-                        
-                        <div class={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-700 ${service.bgGlow.replace('/10', '/40')}`}></div>
-
                         <div class="flex justify-between items-start mb-10">
-                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 shadow-2xl transition-all duration-500 group-hover:rotate-10 group-hover:scale-110 ${service.color}`}>
-                                <service.icon size={28} strokeWidth={1.5} />
+                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 shadow-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 ${service.color}`}>
+                                <service.icon size={32} strokeWidth={1.5} />
                             </div>
                             <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
                                 {service.category}
                             </span>
                         </div>
-                        
-                        <h3 class="text-white text-2xl font-bold mb-4 tracking-tight group-hover:text-cyan-300 transition-colors">
+                        <h3 class="text-white text-2xl font-bold mb-4 tracking-tight group-hover:text-cyan-300 transition-colors uppercase">
                             {service.title}
                         </h3>
-                        
-                        <p class="text-gray-400 text-sm leading-relaxed font-light mb-10 grow italic">
+                        <p class="text-gray-400 text-sm leading-relaxed font-light mb-10 grow italic opacity-80 group-hover:opacity-100 transition-opacity">
                             {service.description}
                         </p>
-
                         <a 
                             href={`${whatsappBase}${encodeURIComponent(service.whatsappMsg)}`}
                             target="_blank"
-                            class={`inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all no-underline
-                            ${service.color} sm:text-gray-400 sm:group-hover:${service.color}`}
+                            class={`inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all no-underline ${service.color} lg:text-gray-400 lg:group-hover:${service.color}`}
                         >
                             <span>Consultar Ahora</span>
-                            <div class={`p-2 rounded-full bg-white/5 group-hover:bg-current transition-all`}>
+                            <div class="p-2.5 rounded-full bg-white/5 group-hover:bg-current transition-all duration-300">
                                 <ArrowUpRight size={14} class="group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </div>
                         </a>
@@ -135,73 +121,83 @@ const whatsappBase = "https://wa.me/584240000000?text=";
     </div>
 </section>
 
+<style>
+    .service-card {
+        will-change: transform, opacity;
+        opacity: 0; /* Estado inicial para evitar parpadeo */
+    }
+    .text-white\/10 { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05); }
+</style>
+
 <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
 
-    function initServices() {
-        // 1. Animación del Header
-        const headerTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#services-header",
-                start: "top 85%",
-            }
+    function init() {
+        // 1. Limpiar todo rastro de animaciones anteriores
+        ScrollTrigger.getAll().forEach(st => st.kill());
+
+        // 2. Animación Header (Ida y Vuelta)
+        const header = document.querySelector("#services-header");
+        if(header) {
+            gsap.fromTo(header.querySelectorAll(".anim-line, .anim-tag, .anim-title"), 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1,
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: header,
+                        start: "top 95%",
+                        end: "top 75%",
+                        scrub: 1,
+                        toggleActions: "play reverse play reverse",
+                    }
+                }
+            );
+        }
+
+        // 3. Animación de Tarjetas (Ida y Vuelta Real)
+        const cards = document.querySelectorAll(".service-card");
+        cards.forEach((card) => {
+            gsap.fromTo(card, 
+                { 
+                    y: 100, 
+                    opacity: 0, 
+                    scale: 0.9,
+                },
+                {
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 100%", // Empieza al asomar
+                        end: "top 70%",   // Se completa rápido
+                        scrub: 1,
+                        // El secreto: play al bajar, reverse al subir
+                        toggleActions: "play reverse play reverse",
+                        invalidateOnRefresh: true,
+                    }
+                }
+            );
         });
 
-        headerTl
-            .from(".anim-line", { width: 0, duration: 1, ease: "expo.out" })
-            .from(".anim-tag", { x: -20, opacity: 0, duration: 0.8 }, "-=0.6")
-            .from(".anim-title", { y: 30, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.6");
-
-        // 2. Animación de las Tarjetas (Entrada en cascada)
-        gsap.from(".service-card", {
-            scrollTrigger: {
-                trigger: "#services-grid",
-                start: "top 80%",
-            },
-            y: 60,
-            opacity: 0,
-            scale: 0.9,
-            stagger: 0.15,
-            duration: 1.2,
-            ease: "expo.out",
-        });
-
-        // 3. Parallax sutil de los fondos de luces
-        gsap.to(".anim-glow", {
-            y: -50,
-            x: 30,
-            duration: 10,
+        // 4. Animación de los Glows de fondo (Bucle infinito independiente)
+        gsap.to(".anim-glow-bg", {
+            y: "random(-50, 50)",
+            x: "random(-30, 30)",
+            duration: 5,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut"
         });
+
+        ScrollTrigger.refresh();
     }
 
-    document.addEventListener('astro:page-load', initServices);
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        initServices();
-    }
+    // Asegurar ejecución en cambios de página de Astro
+    document.addEventListener('astro:page-load', init);
+    // Ejecución inicial
+    init();
 </script>
-
-<style>
-    .service-card {
-        will-change: transform, opacity;
-    }
-
-    /* Efecto de cristal esmerilado solo en hover para PC */
-    @media (min-width: 1024px) {
-        .service-card:hover .backdrop-blur-xl {
-            backdrop-blur: 40px;
-        }
-    }
-
-    /* En móvil, los iconos y textos de acción tienen color siempre para guiar el ojo */
-    @media (max-width: 640px) {
-        .service-card {
-            background: #111112;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-    }
-</style>
