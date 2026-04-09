@@ -1,106 +1,131 @@
 ---
-import { ArrowDown } from 'lucide-astro'; // Asegúrate de tener lucide-astro instalado
+import { ArrowDown } from 'lucide-astro';
 
 interface Props {
   companyName: string;
-  githubUser?: string;
   logoPath?: string;
 }
 
-const { companyName, githubUser, logoPath = "/logodark.png" } = Astro.props;
+const { companyName, logoPath = "/logodark.png" } = Astro.props;
 const personalName = "Jorge Ferrer";
 ---
 
 <header
-  class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#050505] px-4 sm:px-6 md:px-8"
+  class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#050505] px-4"
   id="hero-container"
 >
-  <div
-    class="absolute inset-0 pointer-events-none select-none"
-    id="hero-ambient-glows"
-  >
-    <div
-      class="absolute top-[15%] left-[-5%] w-72 h-72 max-w-MD sm:h-112 bg-cyan-400/15 blur-[100px] rounded-full glow-pulse"
-    >
-    </div>
-    <div
-      class="absolute bottom-[10%] right-[-5%] w-72 h-72 max-w-MD sm:h-112 bg-pink-500/15 blur-[100px] rounded-full glow-pulse-delay"
-    >
-    </div>
+  <div class="absolute inset-0 pointer-events-none" id="ambient-glows">
+    <div class="absolute top-[15%] left-[-5%] w-72 h-72 bg-cyan-400/10 blur-[100px] rounded-full"></div>
+    <div class="absolute bottom-[10%] right-[-5%] w-72 h-72 bg-pink-500/10 blur-[100px] rounded-full"></div>
   </div>
 
-  <div
-    class="relative z-10 flex flex-col items-center text-center w-full max-w-7xl"
-    id="hero-content-wrapper"
-  >
-    <div class="relative mb-6 sm:mb-8" id="hero-logo-wrapper">
-      <img
-        src={logoPath}
-        alt=`Logo de ${companyName}`
-        class="h-16 sm:h-20 md:h-24 w-auto relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-      />
-      <div
-        class="absolute inset-0 bg-cyan-400 blur-2xl opacity-20 scale-150 rounded-full z-0"
-      >
-      </div>
+  <div class="relative z-10 flex flex-col items-center text-center w-full max-w-7xl" id="hero-main-content">
+    
+    <div class="relative mb-8 opacity-0" id="hero-logo">
+      <img src={logoPath} alt="Logo" class="h-20 w-auto relative z-10" />
+      <div class="absolute inset-0 bg-cyan-400 blur-2xl opacity-20 scale-150 rounded-full"></div>
     </div>
 
-    <div class="flex flex-col items-center w-full px-2">
-      <span
-        class="mb-4 sm:mb-6 px-4 py-1.5 border border-cyan-500/30 bg-cyan-950/20 text-cyan-300 text-[9px] sm:text-xs uppercase tracking-[0.25em] font-mono rounded-sm"
-      >
-        {personalName} • Development & IT Support • Venezuela
+    <span id="hero-badge" class="opacity-0 mb-6 px-4 py-1.5 border border-cyan-500/30 bg-cyan-950/20 text-cyan-300 text-[10px] uppercase tracking-[0.25em] font-mono rounded-sm">
+      {personalName} • Development & IT Support
+    </span>
+
+    <h1 class="text-white font-black tracking-tighter mb-8 perspective-distand">
+      <span 
+        id="main-title-text" 
+        class="block text-5xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.9] bg-linear-to-b from-white to-gray-500 bg-clip-text text-transparent min-h-[1.1em]"
+      ></span>
+
+      <span id="sub-title" class="block text-[10px] sm:text-lg mt-4 tracking-[0.5em] uppercase text-pink-500 font-extralight opacity-0">
+        Digital Experience
       </span>
+    </h1>
 
-      <h1
-        class="text-white font-black tracking-tighter mb-6 sm:mb-8 perspective-[1000px]"
-      >
-        <span
-          class="block text-4xl sm:text-7xl md:text-8xl lg:text-9xl leading-[0.9] pb-2 bg-linear-to-b from-white to-gray-500 bg-clip-text text-transparent"
-        >
-          {companyName}
-        </span>
+    <p id="hero-desc" class="opacity-0 text-gray-400 text-sm sm:text-xl max-w-2xl mb-12 italic font-light">
+      Elevamos el estándar de tu negocio con <span class="text-white font-medium">soluciones a medida</span>.
+    </p>
 
-        <span
-          class="block text-[9px] sm:text-xs md:text-lg lg:text-xl mt-2 tracking-[0.3em] sm:tracking-[0.6em] uppercase text-pink-500 font-extralight opacity-90"
-        >
-          Digital Experience
-        </span>
-      </h1>
-
-      <p
-        class="text-gray-400 text-sm sm:text-xl max-w-[320px] sm:max-w-3xl leading-relaxed mb-10 font-light italic"
-      >
-        Elevamos el estándar de tu negocio con <strong class="text-white font-semibold italic">soluciones web a medida y soporte técnico de élite</strong>. Fusionamos la calidez del talento con una estética <strong class="text-white font-semibold">minimalista impecable</strong>.
-      </p>
-
-      <div class="flex flex-col items-center w-full">
-        {
-          githubUser ? (
-            <div class="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
-              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span class="text-gray-300 text-xs sm:text-sm">
-                Lead Specialist: <strong class="text-white font-mono">{personalName}</strong>
-              </span>
-            </div>
-          ) : (
-            <div class="px-6 py-3 rounded-2xl bg-white/5 border border-cyan-500/20 backdrop-blur-xl flex items-center gap-3">
-              <div class="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse"></div>
-              <code class="text-cyan-300 text-[10px] tracking-[0.3em] uppercase font-mono">
-                {personalName} | Active Support
-              </code>
-            </div>
-          )
-        }
-      </div>
-    </div>
-  </div>
-
-  {/* INDICADOR DE SCROLL - Nueva sección */}
-  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity duration-500">
-    <span class="text-[9px] uppercase tracking-[0.4em] font-mono text-white/70">Deslizar</span>
-    <div class="animate-bounce p-1 border border-white/20 rounded-full">
-        <ArrowDown size={14} class="text-cyan-400" />
+    <div id="scroll-hint" class="opacity-0 flex flex-col items-center gap-2">
+      <span class="text-[9px] uppercase tracking-[0.4em] text-white/50">Deslizar</span>
+      <ArrowDown size={16} class="text-cyan-400 animate-bounce" />
     </div>
   </div>
 </header>
+
+<script>
+  import { gsap } from "gsap";
+  import { TextPlugin } from "gsap/TextPlugin";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(TextPlugin, ScrollTrigger);
+
+  const company = "MidnightSystems"; 
+
+  function initHero() {
+    // 1. TIMELINE DE ENTRADA (Carga inicial)
+    const entryTl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+    gsap.set("#main-title-text", { rotationX: 45, opacity: 1 });
+
+    entryTl.to("#hero-logo", { opacity: 1, y: 0, duration: 1.5, startAt: { y: 30 } })
+      .to("#hero-badge", { opacity: 1, y: 0, duration: 1, startAt: { y: 20 } }, "-=1")
+      .to("#main-title-text", {
+        duration: 2,
+        text: company,
+        rotationX: 0,
+        ease: "power3.inOut"
+      }, "-=0.5")
+      .to("#sub-title", { opacity: 1, y: 0, duration: 1, startAt: { y: 15 } }, "-=1")
+      .to(["#hero-desc", "#scroll-hint"], { opacity: 1, y: 0, stagger: 0.2, duration: 1.2 }, "-=0.8");
+
+    // 2. ANIMACIÓN DE SALIDA (Al hacer scroll hacia abajo)
+    // Se sincroniza con el contenedor principal del index
+    gsap.to("#hero-main-content", {
+      scrollTrigger: {
+        trigger: "#hero-container",
+        start: "top top",      // Empieza cuando el hero está arriba
+        end: "bottom top",     // Termina cuando el hero sale de pantalla
+        scrub: true,           // Sincroniza con el movimiento del scroll
+      },
+      scale: 0.7,              // Se aleja
+      opacity: 0,              // Se desvanece
+      y: 100,                  // Cae un poco para dar profundidad
+      filter: "blur(20px)",    // Se desenfoca
+      ease: "none"
+    });
+
+    // 3. ANIMACIÓN DE LOS GLOWS (Sutil movimiento lateral en scroll)
+    gsap.to("#ambient-glows", {
+      scrollTrigger: {
+        trigger: "#hero-container",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      y: 200,
+      opacity: 0,
+      scale: 1.5
+    });
+  }
+
+  window.addEventListener('load', initHero);
+  // Soporte para Astro ViewTransitions
+  document.addEventListener('astro:page-load', initHero);
+</script>
+
+<style>
+  #hero-container {
+    /* Aseguramos que el contenido sea pegajoso si el index lo requiere */
+    perspective: 1200px;
+  }
+
+  #main-title-text {
+    transform-style: preserve-3d;
+    display: block;
+    will-change: transform, opacity, filter;
+  }
+
+  #hero-main-content {
+    will-change: transform, opacity, filter;
+  }
+</style>

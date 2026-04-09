@@ -3,45 +3,38 @@ import HeroSection from '../components/HeroSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
 import Services from '../components/Services.astro';
 import TechStack from '../components/TechStack.astro';
-import ContactSection from '../components/ContactSection.astro'; // <--- Nueva Sección
-import Footer from '../components/Footer.astro'; // <--- Nuevo Footer
+import ContactSection from '../components/ContactSection.astro';
+import Footer from '../components/Footer.astro';
 import Layout from '../layouts/Layout.astro';
 
 const companyName = 'MidnightSystems';
-const githubUser = 'JferrerSis'; // Tu usuario para el Hero y Projects
 ---
 
-<Layout title=`${companyName} | Digital Experience`>
+<Layout title={`${companyName} | Digital Experience`}>
     <main class="relative w-full bg-[#050505] overflow-x-hidden">
         
-        {/* HERO SECTION - Sticky Parallax */}
         <section id="hero-wrapper" class="h-screen w-full sticky top-0 z-0 overflow-hidden">
-            <HeroSection companyName={companyName} githubUser={githubUser} />
+            <HeroSection companyName={companyName} />
         </section>
 
         <div id="content-container" class="relative z-10 bg-[#050505]">
             
-            {/* PROYECTOS - Revelado desde el fondo */}
-            <div class="section-animate">
-                <ProjectsSection />
-            </div>
-
-            {/* SERVICIOS */}
-            <div class="section-animate mt-20">
+            <section class="section-animate pt-20">
                 <Services />
-            </div>
+            </section>
 
-            {/* TECH STACK - Marquee Infinito */}
-            <div class="section-animate">
+            <section class="section-animate py-10">
                 <TechStack />
-            </div>
-            
-            {/* CONTACTO - Reemplaza al CTA anterior por ser más funcional */}
-            <div class="section-animate">
-                <ContactSection />
-            </div>
+            </section>
 
-            {/* FOOTER INDEPENDIENTE */}
+            <section class="section-animate py-20">
+                <ProjectsSection />
+            </section>
+            
+            <section class="section-animate pb-20">
+                <ContactSection />
+            </section>
+
             <Footer />
         </div>
     </main>
@@ -54,7 +47,9 @@ const githubUser = 'JferrerSis'; // Tu usuario para el Hero y Projects
     gsap.registerPlugin(ScrollTrigger);
 
     const initScrollAnimations = () => {
-        // 1. Efecto Parallax y Desvanecimiento del Hero mejorado
+        ScrollTrigger.refresh();
+
+        // 1. PARALLAX HERO (Se mantiene igual, es la base)
         gsap.to("#hero-wrapper", {
             scrollTrigger: {
                 trigger: "#content-container",
@@ -62,59 +57,81 @@ const githubUser = 'JferrerSis'; // Tu usuario para el Hero y Projects
                 end: "top top",    
                 scrub: true,       
             },
-            y: 200,                
-            scale: 0.85,            
+            y: 150,                
+            scale: 0.9,            
             opacity: 0,            
-            filter: "blur(20px)",  
+            filter: "blur(15px)",  
             ease: "none"
         });
 
-        // 2. Revelado suave de cada sección
+        // 2. ANIMACIÓN DE SECCIONES (Entrada y Salida)
         const sections = document.querySelectorAll('.section-animate');
+        
         sections.forEach((section) => {
-            gsap.fromTo(
-                section,
+            // Timeline para cada sección
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 90%",     // Empieza a entrar cuando el top de la sección está al 90% del viewport
+                    end: "bottom 20%",    // Empieza a "desaparecer" cuando el bottom está al 20%
+                    toggleActions: "play reverse play reverse", // Animación de entrada y salida
+                }
+            });
+
+            // Efecto de Entrada y Salida combinado
+            tl.fromTo(section, 
                 { 
                     autoAlpha: 0, 
-                    y: 80, 
+                    y: 100, 
+                    scale: 0.95,
                     filter: "blur(10px)" 
                 },
-                {
-                    autoAlpha: 1,
-                    y: 0,
+                { 
+                    autoAlpha: 1, 
+                    y: 0, 
+                    scale: 1,
                     filter: "blur(0px)",
-                    duration: 1.5,
-                    ease: 'power4.out',
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 85%',
-                        toggleActions: "play none none reverse"
-                    }
+                    duration: 1.2, 
+                    ease: "expo.out" 
                 }
             );
+
+            // 3. EFECTO DE "ALEJAMIENTO" AL SALIR (Opcional pero recomendado para el look Midnight)
+            gsap.to(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",      // Cuando la sección llega al tope de la pantalla
+                    end: "bottom top",   // Hasta que sale por completo
+                    scrub: true,
+                },
+                scale: 0.8,               // Se encoge ligeramente
+                y: -100,                  // Se desplaza hacia arriba más rápido
+                opacity: 0,               // Se desvanece
+                filter: "blur(10px)",     // Se desenfoca
+                ease: "none"
+            });
         });
     };
 
-    // Reinicializar en cada carga de página (Astro View Transitions)
-    document.addEventListener('DOMContentLoaded', initScrollAnimations);
     document.addEventListener('astro:page-load', initScrollAnimations);
 </script>
 
 <style>
     :global(html) {
         background-color: #050505;
-        /* Evita saltos visuales en el scroll de GSAP */
-        overflow-x: hidden;
+        scrollbar-gutter: stable;
     }
 
     #content-container {
-        /* Añade una sombra interna para que el hero parezca que se desliza debajo */
-        box-shadow: 0 -50px 100px -20px rgba(0,0,0,0.5);
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: linear-gradient(to bottom, transparent, #050505 10vh);
+        box-shadow: 0 -100px 100px rgba(0,0,0,0.9);
+        /* Importante para que el efecto de escala no corte los bordes */
+        overflow: visible; 
     }
 
-    /* Mejora el suavizado de las animaciones en dispositivos de alta tasa de refresco */
     .section-animate {
-        will-change: transform, opacity;
+        will-change: transform, opacity, filter;
+        /* Evita que las secciones se amontonen visualmente durante la escala */
+        transform-origin: center center;
     }
 </style>

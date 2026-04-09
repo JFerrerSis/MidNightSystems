@@ -3,118 +3,231 @@ import {
   Mail, 
   MessageCircle, 
   Instagram, 
-  ArrowUpRight
+  Send,
+  User,
+  AtSign,
+  MessageSquare,
+  ShieldCheck
 } from 'lucide-astro';
 
-// Extraemos las variables del entorno
-const whatsappNumber = import.meta.env.PUBLIC_WHATSAPP_NUMBER;
-const emailAddress = import.meta.env.PUBLIC_EMAIL;
-const instagramUser = import.meta.env.PUBLIC_INSTAGRAM_USER;
-
-// Preparamos los textos para los enlaces (URL encoded)
-const waMsg = encodeURIComponent("Hola Jorge, vi tu portfolio en MidnightSystems y me gustaría consultar por un proyecto.");
-const mailSubject = encodeURIComponent("Consulta de Proyecto - MidnightSystems");
-
-const contactMethods = [
-    {
-        name: "WhatsApp",
-        label: "Chat Directo",
-        url: `https://wa.me/${whatsappNumber}?text=${waMsg}`,
-        icon: MessageCircle,
-        color: "text-emerald-400",
-        bg: "bg-emerald-500/5 lg:bg-transparent lg:group-hover:bg-emerald-500/5",
-        border: "border-white/5 lg:group-hover:border-emerald-500/20"
-    },
-    {
-        name: "Email",
-        label: "Propuestas Formales",
-        url: `mailto:${emailAddress}?subject=${mailSubject}`,
-        icon: Mail,
-        color: "text-cyan-400",
-        bg: "bg-cyan-500/5 lg:bg-transparent lg:group-hover:bg-cyan-500/5",
-        border: "border-white/5 lg:group-hover:border-cyan-500/20"
-    },
-    {
-        name: "Instagram",
-        label: "Mensaje Directo",
-        url: `https://instagram.com/${instagramUser}`,
-        icon: Instagram,
-        color: "text-pink-500",
-        bg: "bg-pink-500/5 lg:bg-transparent lg:group-hover:bg-pink-500/5",
-        border: "border-white/5 lg:group-hover:border-pink-500/20"
-    }
-];
+const FORM_ACTION = "https://formspree.io/f/mjgpdjlp"; 
 ---
 
-<section class="py-24 px-4 sm:px-6 lg:px-8 bg-[#050505] relative" id="contact-section">
-    <div class="max-w-7xl mx-auto">
-        <div class="mb-16 text-center sm:text-left">
-            <span class="text-cyan-500 font-mono text-xs uppercase tracking-[0.3em] mb-4 block">Contacto</span>
-            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter">
-                ¿Listo para <span class="text-gray-500 text-3xl md:text-4xl font-light">conectar?</span>
+<section class="py-24 px-4 bg-[#050505] relative overflow-hidden" id="contact-section">
+    <div class="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+    
+    <div class="max-w-6xl mx-auto relative z-10">
+        
+        <div class="mb-16 overflow-hidden" id="contact-header">
+            <div class="flex items-center gap-3 mb-4 anim-contact-up">
+                <span class="w-8 h-px bg-pink-500"></span>
+                <span class="text-pink-500 font-mono text-[10px] uppercase tracking-[0.4em]">Contáctame</span>
+            </div>
+            <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter uppercase italic anim-contact-up">
+                ¿Tienes un <span class="text-transparent stroke-text not-italic">Proyecto?</span>
             </h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {contactMethods.map((method) => (
-                <a 
-                    href={method.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class={`contact-card group relative p-8 rounded-3xl border ${method.border} ${method.bg} transition-all duration-500 opacity-0 translate-y-8`}
-                >
-                    <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex justify-between items-start mb-20">
-                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 group-hover:scale-110 ${method.color}`}>
-                                <method.icon size={32} strokeWidth={1.5} />
-                            </div>
-                            <div class="p-2 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                <ArrowUpRight class="text-white" size={20} />
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            <div class="contact-form-container relative opacity-0 translate-x-12 min-h-100">
+                <form id="contact-form" action={FORM_ACTION} method="POST" class="space-y-6 transition-all duration-500">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2 group">
+                            <label class="text-[10px] font-mono text-gray-500 uppercase tracking-widest ml-4 group-focus-within:text-cyan-400">Nombre</label>
+                            <div class="relative">
+                                <User class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-cyan-500 transition-colors" size={18} />
+                                <input type="text" name="name" required placeholder="Tu nombre" class="w-full bg-white/2 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-700 focus:border-cyan-500/50 focus:bg-white/5 transition-all outline-none" />
                             </div>
                         </div>
-                        
-                        <div class="mt-auto">
-                            <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gray-500 mb-2 block">
-                                {method.label}
-                            </span>
-                            <h3 class="text-white text-3xl font-bold tracking-tighter transition-colors duration-300">
-                                {method.name}
-                            </h3>
+                        <div class="space-y-2 group">
+                            <label class="text-[10px] font-mono text-gray-500 uppercase tracking-widest ml-4 group-focus-within:text-cyan-400">Email</label>
+                            <div class="relative">
+                                <AtSign class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-cyan-500 transition-colors" size={18} />
+                                <input type="email" name="email" required placeholder="tu@email.com" class="w-full bg-white/2 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-gray-700 focus:border-cyan-500/50 focus:bg-white/5 transition-all outline-none" />
+                            </div>
                         </div>
                     </div>
 
-                    <div class={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none bg-radial-gradient from-white to-transparent`}></div>
-                </a>
-            ))}
+                    <div class="space-y-2 group">
+                        <label class="text-[10px] font-mono text-gray-500 uppercase tracking-widest ml-4 group-focus-within:text-cyan-400">Mensaje</label>
+                        <div class="relative">
+                            <MessageSquare class="absolute left-4 top-6 text-gray-600 group-focus-within:text-cyan-500 transition-colors" size={18} />
+                            <textarea name="message" required rows="4" placeholder="Cuéntame sobre tu idea..." class="w-full bg-white/2 border border-white/5 rounded-3xl py-4 pl-12 pr-4 text-white placeholder:text-gray-700 focus:border-cyan-500/50 focus:bg-white/5 transition-all outline-none resize-none"></textarea>
+                        </div>
+                    </div>
+
+                   <div class="flex items-start gap-4 px-2 anim-terms group/terms">
+    <div class="relative flex items-center h-5 mt-1">
+        <input 
+            id="terms" 
+            type="checkbox" 
+            required 
+            class="peer h-5 w-5 rounded-lg border-white/10 bg-white/5 text-cyan-500 focus:ring-cyan-500/20 transition-all cursor-pointer appearance-none border checked:bg-cyan-500/20 checked:border-cyan-500/50"
+        />
+        <ShieldCheck 
+            class="absolute pointer-events-none opacity-0 peer-checked:opacity-100 text-cyan-400 left-1 top-1 transition-opacity" 
+            size={12} 
+            strokeWidth={3} 
+        />
+    </div>
+    <div class="flex flex-col gap-1">
+        <label for="terms" class="text-[11px] text-gray-400 leading-tight cursor-pointer select-none group-hover/terms:text-gray-300 transition-colors">
+            Acepto los <span class="text-cyan-500/80 font-medium">Términos de Privacidad</span>
+        </label>
+        <p class="text-[9px] text-gray-600 font-mono uppercase tracking-wider leading-relaxed max-w-sm">
+            Al marcar esta casilla, autorizas a <span class="text-gray-500">Midnight Systems</span> a procesar tus datos personales (Nombre y Email) únicamente con el fin de gestionar tu consulta y enviarte una propuesta técnica. No compartimos tu información con terceros.
+        </p>
+    </div>
+</div>
+
+                    <button 
+                        type="submit" 
+                        id="submit-btn" 
+                        disabled
+                        class="w-full bg-white text-black font-black py-4 rounded-2xl uppercase tracking-[0.3em] text-xs hover:bg-cyan-500 hover:text-white disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed transition-all duration-500 flex items-center justify-center gap-3 group/btn"
+                    >
+                        <span id="btn-text">Enviar Mensaje</span>
+                        <Send size={16} class="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                    </button>
+                </form>
+
+                <div id="form-status" class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-white/1 border border-white/5 rounded-[2.5rem] opacity-0 pointer-events-none transition-all duration-500 scale-95">
+                    <div id="status-icon-container" class="mb-6 p-6 rounded-full bg-white/5"></div>
+                    <h3 id="status-title" class="text-2xl font-bold text-white mb-2 tracking-tight"></h3>
+                    <p id="status-desc" class="text-gray-500 italic font-light"></p>
+                </div>
+            </div>
+
+            <div class="space-y-8 contact-info-container opacity-0 -translate-x-12">
+                <p class="text-gray-400 text-lg italic font-light leading-relaxed">
+                    Si prefieres algo más directo, también puedes encontrarme en mis redes sociales. <span class="text-white">Respondemos en menos de 24 horas.</span>
+                </p>
+
+                <div class="grid grid-cols-1 gap-4">
+                    <a href="#" class="group flex items-center justify-between p-6 bg-white/2 border border-white/5 rounded-2xl hover:border-emerald-500/30 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-500 group-hover:scale-110 transition-transform">
+                                <MessageCircle size={24} />
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold tracking-tight">WhatsApp</h4>
+                                <p class="text-gray-500 text-xs font-mono uppercase">Respuesta inmediata</p>
+                            </div>
+                        </div>
+                        <span class="text-gray-700 group-hover:text-emerald-500 transition-colors">→</span>
+                    </a>
+
+                    <a href="#" class="group flex items-center justify-between p-6 bg-white/2 border border-white/5 rounded-2xl hover:border-pink-500/30 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="p-3 bg-pink-500/10 rounded-xl text-pink-500 group-hover:scale-110 transition-transform">
+                                <Instagram size={24} />
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold tracking-tight">Instagram</h4>
+                                <p class="text-gray-500 text-xs font-mono uppercase">Mensaje directo</p>
+                            </div>
+                        </div>
+                        <span class="text-gray-700 group-hover:text-pink-500 transition-colors">→</span>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
+
+<style>
+    .stroke-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); }
+    .contact-form-container, .contact-info-container { will-change: transform, opacity; }
+</style>
 
 <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
     gsap.registerPlugin(ScrollTrigger);
 
-    const initContact = () => {
-        gsap.to(".contact-card", {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power4.out",
+    function initContact() {
+        // 1. Cabecera (Entra y sale)
+        gsap.from(".anim-contact-up", {
+            y: 30, opacity: 0, stagger: 0.1, duration: 0.8,
             scrollTrigger: {
-                trigger: "#contact-section",
-                start: "top 80%",
+                trigger: "#contact-header",
+                start: "top 95%",
+                end: "bottom 5%",
+                toggleActions: "play reverse play reverse"
             }
         });
-    };
 
-    document.addEventListener('DOMContentLoaded', initContact);
-    document.addEventListener('astro:page-load', initContact);
-</script>
+        // 2. Contenedores (Formulario e Info) - Efecto de ida y vuelta
+        gsap.to(".contact-form-container", {
+            opacity: 1, x: 0, duration: 1, ease: "power4.out",
+            scrollTrigger: {
+                trigger: ".contact-form-container",
+                start: "top 90%",
+                end: "bottom 10%",
+                toggleActions: "play reverse play reverse"
+            }
+        });
 
-<style>
-    .bg-radial-gradient {
-        background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, transparent 70%);
+        gsap.to(".contact-info-container", {
+            opacity: 1, x: 0, duration: 1, ease: "power4.out",
+            scrollTrigger: {
+                trigger: ".contact-info-container",
+                start: "top 90%",
+                end: "bottom 10%",
+                toggleActions: "play reverse play reverse"
+            }
+        });
+
+        // Lógica del Formulario (Inputs y Checkbox)
+        const form = document.getElementById('contact-form') as HTMLFormElement;
+        const termsCheckbox = document.getElementById('terms') as HTMLInputElement;
+        const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+        const btnText = document.getElementById('btn-text');
+        const statusDiv = document.getElementById('form-status');
+        const iconContainer = document.getElementById('status-icon-container');
+
+        termsCheckbox?.addEventListener('change', () => {
+            submitBtn.disabled = !termsCheckbox.checked;
+        });
+
+        form?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(btnText) btnText.innerText = "Enviando...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    showStatus(true);
+                    form.reset();
+                } else {
+                    showStatus(false);
+                }
+            } catch { showStatus(false); }
+        });
+
+        function showStatus(isSuccess: boolean) {
+            if(iconContainer) iconContainer.innerHTML = isSuccess ? '✅' : '❌'; // Simplificado para el ejemplo
+            gsap.to(form, { opacity: 0, scale: 0.95, duration: 0.4 });
+            gsap.to(statusDiv, { opacity: 1, scale: 1, pointerEvents: 'all', duration: 0.4 });
+
+            setTimeout(() => {
+                gsap.to(statusDiv, { opacity: 0, scale: 0.95, duration: 0.4 });
+                gsap.to(form, { opacity: 1, scale: 1, duration: 0.4, onComplete: () => {
+                    if(btnText) btnText.innerText = "Enviar Mensaje";
+                    submitBtn.disabled = true;
+                }});
+            }, 3000);
+        }
     }
-</style>
+
+    document.addEventListener('astro:page-load', initContact);
+    initContact();
+</script>
