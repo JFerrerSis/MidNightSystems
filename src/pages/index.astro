@@ -10,28 +10,25 @@ import Layout from '../layouts/Layout.astro';
 const companyName = 'MidnightSystems';
 ---
 
-<Layout title={`${companyName} | Digital Experience`}>
-    <main class="relative w-full bg-[#0a0a0b] overflow-x-hidden">
-        
-        <section id="hero-wrapper" class="h-screen w-full sticky top-0 z-0 overflow-hidden bg-[#0a0a0b]">
+<Layout>
+    <main class="relative w-full">
+        <section id="hero-wrapper" class="h-screen w-full overflow-hidden bg-[#0a0a0b] relative z-0">
             <HeroSection companyName={companyName} />
         </section>
 
-        <div id="content-container" class="relative z-10 bg-[#0a0a0b]">
+        <div id="content-container" class="relative z-10 bg-[#0a0a0b] shadow-[0_-50px_100px_rgba(0,0,0,0.9)]">
             
-            <section class="pt-1 lg:pt-5">
+            <section id="services-wrapper" class="pt-1 lg:pt-5">
                 <Services />
             </section>
 
+            
+
+            <ProjectsSection />
             <section class="py-1 lg:py-5">
                 <TechStack />
             </section>
-
-            <section>
-                <ProjectsSection />
-            </section>
-            
-            <section class="py-1 lg:py-5">
+            <section id="contact-section" class="py-20 lg:py-32">
                 <ContactSection />
             </section>
 
@@ -47,11 +44,10 @@ const companyName = 'MidnightSystems';
     gsap.registerPlugin(ScrollTrigger);
 
     const initGlobalAnimations = () => {
-        // Matamos todo lo anterior para que no haya basura en memoria
+        // Matamos instancias previas para evitar duplicados en Astro
         ScrollTrigger.getAll().forEach(t => t.kill());
 
-        // 1. ÚNICA ANIMACIÓN GLOBAL: El Hero desaparece al bajar
-        // Esto es necesario porque el Hero es "Sticky" y está fuera de los componentes
+        // Animación suave de salida del Hero
         gsap.to("#hero-wrapper", {
             scrollTrigger: {
                 trigger: "#content-container",
@@ -59,30 +55,37 @@ const companyName = 'MidnightSystems';
                 end: "top top",    
                 scrub: true,       
             },
-            scale: 0.9,            
-            opacity: 0,            
+            scale: 0.9,
+            opacity: 0,
+            y: 100, // Efecto parallax sutil
             ease: "none"
         });
-        
+
+        // Refrescamos después de inicializar todo
         ScrollTrigger.refresh();
     };
 
-    document.addEventListener('astro:page-load', initGlobalAnimations);
-
-    if (document.readyState === 'complete') {
+    document.addEventListener('astro:page-load', () => {
         initGlobalAnimations();
-    }
+    });
 </script>
 
 <style>
     :global(html) {
-        background-color: #0a0a0b; 
-        scrollbar-gutter: stable;
+        scroll-behavior: auto !important; /* El scroll-behavior smooth rompe a veces a GSAP */
+        background: #0a0a0b;
+    }
+
+    /* Limpiamos estilos que causan bugs en ScrollTrigger Pinning */
+    main {
+        overflow-x: hidden;
+        position: relative;
     }
 
     #content-container {
-        background-color: #0a0a0b;
-        overflow: visible; 
-        margin-top: -1px; 
+        min-height: 100vh;
+        position: relative;
+        z-index: 10;
+        /* Quitamos perspective: 1px ya que rompe el fixed de GSAP */
     }
 </style>

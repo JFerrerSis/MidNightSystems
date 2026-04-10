@@ -1,5 +1,5 @@
 ---
-import { Database, Monitor, Terminal, Cpu, ShieldCheck, Github } from "lucide-astro";
+import { Database, Monitor, Cpu, ShieldCheck } from "lucide-astro";
 
 const groups = [
   {
@@ -8,7 +8,7 @@ const groups = [
       { name: "Astro", logo: "https://cdn.simpleicons.org/astro/white", glow: "#ff5d01", isLucide: false },
       { name: "React", logo: "https://cdn.simpleicons.org/react/61DAFB", glow: "#61DAFB", isLucide: false },
       { name: "Tailwind", logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4", glow: "#06B6D4", isLucide: false },
-      { name: "JavaScript", logo: "https://cdn.simpleicons.org/javascript/F7DF1E", glow: "#F7DF1E", isLucide: false },
+      { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript", glow: "#4169E1", isLucide: false },
     ],
   },
   {
@@ -38,11 +38,11 @@ const groups = [
 
   <div class="max-w-6xl mx-auto relative z-10">
     <div class="mb-20 overflow-hidden" id="tech-header">
-      <div class="flex items-center gap-3 mb-4 anim-header-tech">
+      <div class="flex items-center gap-3 mb-4 anim-header-tech opacity-0">
         <span class="w-8 h-px bg-pink-500"></span>
         <span class="text-pink-500 font-mono text-[10px] uppercase tracking-[0.4em]">Habilidades</span>
       </div>
-      <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter uppercase italic anim-header-tech">
+      <h2 class="text-white text-4xl md:text-5xl font-black tracking-tighter uppercase italic anim-header-tech opacity-0">
         Tech <span class="text-transparent stroke-text not-italic">Stack.</span>
       </h2>
     </div>
@@ -51,35 +51,26 @@ const groups = [
       {groups.map((group) => (
         <div class="tech-group">
           <h3 class="text-gray-500 font-mono text-[10px] uppercase tracking-[0.4em] mb-12 flex items-center gap-4">
-            <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent line-l"></span>
+            <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent"></span>
             <span class="px-4 opacity-0 translate-y-4 category-title italic">{group.category}</span>
-            <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent line-r"></span>
+            <span class="h-px grow bg-linear-to-r from-transparent via-white/10 to-transparent"></span>
           </h3>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 perspective-1000">
             {group.items.map((item) => (
               <div 
-                class="tech-card group relative p-6 rounded-2xl border border-white/10 bg-white/2 overflow-hidden transition-all duration-500"
+                class="tech-card opacity-0 translate-y-10 group relative p-6 rounded-2xl border border-white/10 bg-white/2 overflow-hidden transition-all duration-500"
                 style={`--glow-color: ${item.glow}`}
               >
-                <div class="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500" />
-                
                 <div class="flex flex-col items-center gap-4 relative z-10">
-                  <div class="p-3 rounded-xl bg-white/5 border border-white/10 transition-all duration-500 sm:group-hover:scale-110 sm:group-hover:-rotate-3 icon-container">
-                    {item.isLucide ? (
-                      <item.logo class={`w-8 h-8 ${item.color || ''}`} strokeWidth={1.5} />
-                    ) : (
-                      <img
-                        src={item.logo as string}
-                        alt={item.name}
-                        class="w-8 h-8 object-contain transition-all duration-500 filter-none sm:filter sm:grayscale sm:brightness-150 sm:group-hover:grayscale-0 sm:group-hover:brightness-100"
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
-                  <span class="text-white sm:text-gray-400 sm:group-hover:text-white text-[10px] font-mono text-center uppercase tracking-widest transition-colors">
-                    {item.name}
-                  </span>
+                    <div class="p-3 rounded-xl bg-white/5 border border-white/10 icon-container">
+                        {item.isLucide ? (
+                            <item.logo class={`w-8 h-8 ${item.color || ''}`} strokeWidth={1.5} />
+                        ) : (
+                            <img src={item.logo as string} alt={item.name} class="w-8 h-8 object-contain" />
+                        )}
+                    </div>
+                    <span class="text-white text-[10px] font-mono text-center uppercase tracking-widest">{item.name}</span>
                 </div>
               </div>
             ))}
@@ -92,31 +83,12 @@ const groups = [
 
 <style>
   .stroke-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); }
-  .tech-card { transform-style: preserve-3d; will-change: transform, opacity, filter; }
-
-  /* Glow dinámico en PC */
+  .tech-card { transform-style: preserve-3d; will-change: transform, opacity; }
+  
   @media (min-width: 641px) {
     .tech-card:hover {
       border-color: var(--glow-color);
       box-shadow: 0 0 20px -5px var(--glow-color);
-    }
-    .tech-card:hover .icon-container {
-      border-color: var(--glow-color);
-      box-shadow: 0 0 15px -5px var(--glow-color);
-    }
-  }
-  
-  /* Móvil: Brillo suave estático */
-  @media (max-width: 640px) {
-    .tech-card {
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 12px -8px var(--glow-color);
-    }
-    .icon-container {
-      border-color: var(--glow-color);
-    }
-    .tech-card img {
-      filter: grayscale(0) brightness(1) !important;
     }
   }
 </style>
@@ -125,65 +97,70 @@ const groups = [
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-  function init() {
+  function initTechStack() {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".anim-header-tech", {
-      y: 30, opacity: 0, duration: 0.8, stagger: 0.1,
+    // Matamos triggers previos de esta sección
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.trigger && (st.trigger as HTMLElement).closest('#tech-section')) st.kill();
+    });
+
+    // 1. Animación Header
+    gsap.to(".anim-header-tech", {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power3.out",
       scrollTrigger: {
         trigger: "#tech-header",
-        start: "top 95%",
-        end: "bottom 5%",
-        toggleActions: "play reverse play reverse",
+        start: "top 90%",
+        once: true
       }
     });
 
+    // 2. Animación por Grupos
     const techGroups = document.querySelectorAll(".tech-group");
     techGroups.forEach((group) => {
       const cards = group.querySelectorAll(".tech-card");
       const title = group.querySelector(".category-title");
 
+      // Título de categoría
       gsap.to(title, {
-        opacity: 1, y: 0, duration: 0.6,
+        opacity: 1, 
+        y: 0, 
+        duration: 0.6,
         scrollTrigger: {
           trigger: group,
-          start: "top 90%",
-          end: "bottom 10%",
-          toggleActions: "play reverse play reverse",
+          start: "top 85%",
+          once: true
         }
       });
 
-      gsap.fromTo(cards,
-        { scale: 0.8, opacity: 0, filter: "blur(10px)", y: 40 },
-        {
-          scale: 1, opacity: 1, filter: "blur(0px)", y: 0,
-          stagger: 0.1, duration: 0.7, ease: "back.out(1.2)",
-          scrollTrigger: {
-            trigger: group,
-            start: "top 85%",
-            end: "bottom 15%",
-            toggleActions: "play reverse play reverse",
-          }
+      // Cards
+      gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.05,
+        duration: 0.8,
+        ease: "back.out(1.4)",
+        scrollTrigger: {
+          trigger: group,
+          start: "top 80%",
+          once: true
         }
-      );
+      });
     });
 
-    if (window.matchMedia("(min-width: 1024px)").matches) {
-      document.querySelectorAll(".tech-card").forEach((card) => {
-        card.addEventListener("mousemove", (e) => {
-          const ev = e as MouseEvent;
-          const rect = (card as HTMLElement).getBoundingClientRect();
-          const x = ev.clientX - rect.left - rect.width / 2;
-          const y = ev.clientY - rect.top - rect.height / 2;
-          gsap.to(card, { rotateY: x * 0.1, rotateX: -y * 0.1, scale: 1.05, duration: 0.4 });
-        });
-        card.addEventListener("mouseleave", () => {
-          gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.6 });
-        });
-      });
-    }
+    // 3. REFRESH CONTROLADO: Vital para que ProjectsSection no rompa esto
+    setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 200);
   }
 
-  document.addEventListener("astro:page-load", init);
-  init();
+  // Soporte para Astro View Transitions
+  document.addEventListener("astro:page-load", initTechStack);
+  
+  // Ejecución inicial
+  initTechStack();
 </script>

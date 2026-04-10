@@ -1,30 +1,94 @@
 ---
 import '../styles/global.css';
-import LanguagePicker from '../components/LanguagePicker.astro'; // <--- Importar
+import LanguagePicker from '../components/LanguagePicker.astro';
 interface Props {
-	title?: string;
-	description?: string;
+    title?: string;
+    description?: string;
 }
 
 const {
-	title = 'MidnightSistems | Portafolio',
-	description = 'Portafolio de proyectos con estilo cyberpunk glassmorphism.'
+    title = 'MidnightSistems | Portafolio',
+    description = 'Portafolio de proyectos con estilo cyberpunk glassmorphism.'
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/logodark.png" />
-		<link rel="icon" href="/logodark.png" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
-	</head>
-	<body>
-		
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/logodark.png" />
+        <link rel="icon" href="/logodark.png" />
+        <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={description} />
+        <title>{title}</title>
+    </head>
+    <body class="bg-[#020202] selection:bg-cyan-500/30">
+        <div 
+            id="scroll-progress" 
+            class="fixed top-0 left-0 h-0.5 bg-cyan-500 z-9999 w-0 pointer-events-none shadow-[0_0_10px_#06b6d4]"
+        ></div>
+        
+        <slot />
+
+        <script>
+            const setupScroll = () => {
+                const progressBar = document.getElementById("scroll-progress");
+                
+                window.onscroll = () => {
+                    const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    
+                    if (progressBar) {
+                        progressBar.style.width = scrolled + "%";
+                    }
+                };
+            };
+
+            // Ejecuta al cargar y al navegar entre páginas (Astro)
+            setupScroll();
+            document.addEventListener("astro:page-load", setupScroll);
+        </script>
+    </body>
 </html>
+
+<style is:global>
+  /* Personalización del Scrollbar */
+  
+  /* Chrome, Safari y Opera */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #020202; 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.1); /* Muy sutil */
+    border-radius: 20px;
+    transition: background 0.3s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 211, 238, 0.4); /* Se ilumina al interactuar */
+  }
+
+  /* Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(34, 211, 238, 0.2) transparent;
+    scroll-behavior: smooth;
+  }
+
+  /* Utilidad para ocultar scroll completamente si lo necesitas en algún contenedor */
+  .hide-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scroll::-webkit-scrollbar {
+    display: none;
+  }
+</style>

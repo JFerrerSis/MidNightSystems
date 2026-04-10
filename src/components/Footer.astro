@@ -1,100 +1,183 @@
 ---
-import { Github, Instagram, Send, Cpu, ExternalLink, Linkedin } from 'lucide-astro';
+import { Github, Instagram, Cpu, ExternalLink, ArrowUpRight, Globe } from 'lucide-astro';
 
 const añoActual = new Date().getFullYear();
 const nombrePersonal = "Jorge Ferrer";
 
-// Conexión con variables de entorno
 const usuarioGithub = import.meta.env.PUBLIC_GITHUB_USER || "JferrerSis";
 const usuarioInstagram = import.meta.env.PUBLIC_INSTAGRAM_USER;
+
+const tags = ["UI/UX DESIGN", "IT SUPPORT", "ASTRO DEV", "FULLSTACK", "MINIMALISM", "BRUTALISM"];
 ---
 
-<footer class="bg-[#050505] pt-24 pb-12 px-6 border-t border-white/5 relative overflow-hidden">
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 w-64 h-64 bg-pink-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+<footer class="bg-[#050505] pt-32 pb-12 px-6 border-t border-white/5 relative overflow-hidden" id="main-footer">
+    <div class="absolute top-0 left-1/4 w-125 h-125 bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none opacity-50"></div>
+    <div class="absolute bottom-[-10%] right-[-5%] w-100 h-100 bg-pink-500/10 blur-[120px] rounded-full pointer-events-none opacity-30"></div>
     
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-20">
-            
-            <div class="lg:col-span-5 space-y-8 flex flex-col items-center lg:items-start text-center lg:text-left">
-                <div class="group cursor-pointer">
-                    <div class="flex items-center gap-3 transition-transform duration-500 group-hover:-translate-y-1">
-                        <div class="w-10 h-10 rounded-xl bg-linear-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center shadow-2xl">
-                            <Cpu size={22} class="text-cyan-400 animate-pulse" />
-                        </div>
-                        <span class="text-white font-black tracking-tighter text-2xl uppercase italic">
-                            Midnight<span class="text-gray-500 font-light not-italic uppercase tracking-normal">Systems</span>
+    <div class="absolute top-0 left-0 w-full overflow-hidden py-4 border-b border-white/5 bg-white/2 backdrop-blur-sm">
+        <div class="flex whitespace-nowrap marquee">
+            {[1, 2, 3, 4].map(() => (
+                <div class="flex items-center gap-10 px-5">
+                    {tags.map(tag => (
+                        <span class="text-white/20 font-black italic text-[10px] tracking-[0.5em] uppercase flex items-center gap-4">
+                            {tag} <span class="w-1 h-1 bg-cyan-500 rounded-full"></span>
                         </span>
-                    </div>
+                    ))}
                 </div>
-                
-                <p class="text-gray-400 text-sm font-light leading-relaxed max-w-sm">
-                    Especialista en desarrollo web y soporte IT. Transformando ideas complejas en interfaces minimalistas y funcionales desde <span class="text-white">Venezuela</span> pal' mundo.
-                </p>
+            ))}
+        </div>
+    </div>
 
-                <div class="flex items-center gap-4">
-                    <a href={`https://github.com/${usuarioGithub}`} target="_blank" class="p-3 rounded-full bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/20 hover:scale-110 transition-all duration-300">
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12 mb-24">
+            
+            <div class="lg:col-span-5 space-y-10">
+                <div class="footer-reveal">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 rounded-2xl bg-lineat-to-br from-cyan-500/20 to-pink-500/20 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Cpu size={24} class="text-white" />
+                        </div>
+                        <h2 class="text-white font-black text-3xl uppercase italic tracking-tighter">
+                            MIDNIGHT<span class="text-gray-600 not-italic font-light">SYSTEMS</span>
+                        </h2>
+                    </div>
+                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-md">
+                        Construyendo el futuro digital con precisión arquitectónica y <span class="text-white underline decoration-cyan-500/50 underline-offset-4">estética de medianoche</span>.
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-4 footer-reveal">
+                    <a href={`https://github.com/${usuarioGithub}`} class="social-icon group">
                         <Github size={20} />
                     </a>
-                    {usuarioInstagram && (
-                        <a href={`https://instagram.com/${usuarioInstagram}`} target="_blank" class="p-3 rounded-full bg-white/5 border border-white/5 text-gray-400 hover:text-pink-500 hover:border-pink-500/20 hover:scale-110 transition-all duration-300">
-                            <Instagram size={20} />
-                        </a>
-                    )}
+                    <a href={`https://instagram.com/${usuarioInstagram}`} class="social-icon group">
+                        <Instagram size={20} />
+                    </a>
+                    <a href="#" class="social-icon group">
+                        <Globe size={20} />
+                    </a>
                 </div>
             </div>
 
-            <div class="lg:col-span-3 flex flex-col items-center lg:items-start space-y-6">
-                <h4 class="text-white font-mono text-[10px] uppercase tracking-[0.4em] mb-2">Navegación</h4>
-                <ul class="space-y-4 text-center lg:text-left">
-                    <li><a href="#services-section" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors flex items-center gap-2 group justify-center lg:justify-start">Servicios <ExternalLink size={12} class="opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                    <li><a href="#projects-section" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors flex items-center gap-2 group justify-center lg:justify-start">Proyectos <ExternalLink size={12} class="opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
-                    <li><a href="#contact-section" class="text-gray-500 hover:text-cyan-400 text-sm transition-colors flex items-center gap-2 group justify-center lg:justify-start">Contacto <ExternalLink size={12} class="opacity-0 group-hover:opacity-100 transition-opacity" /></a></li>
+            <div class="lg:col-span-3 footer-reveal">
+                <h4 class="text-white/30 font-mono text-[10px] uppercase tracking-[0.5em] mb-10">Navegación</h4>
+                <ul class="space-y-6">
+                    {['Services', 'Projects', 'Contact'].map(item => (
+                        <li>
+                            <a href={`#${item.toLowerCase()}-section`} class="group flex items-center gap-4 text-gray-500 hover:text-white transition-all text-xl font-medium italic uppercase tracking-tighter">
+                                <span class="text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity tracking-widest text-xs not-italic">0{item === 'Services' ? 1 : item === 'Projects' ? 2 : 3}</span>
+                                {item}
+                                <ArrowUpRight size={16} class="text-gray-700 group-hover:text-cyan-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                            </a>
+                        </li>
+                    ))}
                 </ul>
             </div>
 
-            <div class="lg:col-span-4 flex flex-col items-center lg:items-end space-y-8">
-                <div class="w-full max-w-xs p-6 rounded-4xl bg-white/2 border border-white/5 backdrop-blur-sm group hover:border-cyan-500/20 transition-all">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            <div class="lg:col-span-4 footer-reveal">
+                <div class="status-card group p-8 rounded-4xl bg-white/3 border border-white/10 relative overflow-hidden transition-all duration-500 hover:border-cyan-500/50">
+                    <div class="absolute inset-0 bg-lineat-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
+                            </span>
+                            <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Status: Online</span>
                         </div>
-                        <span class="text-[10px] font-mono text-white uppercase tracking-widest">Status: Disponible</span>
+                        <h3 class="text-white text-2xl font-black italic uppercase leading-none mb-4">¿Tienes una idea brutal?</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed mb-8">Aceptando nuevos retos freelance y colaboraciones de alto nivel.</p>
+                        
+                        <a href="#contact-section" class="inline-flex items-center gap-2 text-white font-mono text-[10px] uppercase tracking-widest border-b border-white/20 pb-2 hover:border-cyan-500 transition-colors">
+                            Comenzar Proyecto
+                        </a>
                     </div>
-                    <p class="text-[11px] text-gray-500 font-mono leading-tight">
-                        Actualmente aceptando proyectos freelance de desarrollo web y consultoría técnica.
-                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex flex-col md:flex-row items-center gap-2 md:gap-6">
-                <span class="text-gray-600 text-[9px] font-mono uppercase tracking-[0.4em]">
-                    © {añoActual} — {nombrePersonal}
-                </span>
-                <span class="hidden md:block w-1 h-1 bg-white/10 rounded-full"></span>
-                <span class="text-gray-700 text-[9px] font-mono uppercase tracking-[0.4em]">
-                    Venezuela
-                </span>
+        <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-gray-600 text-[10px] font-mono uppercase tracking-[0.4em] flex flex-wrap justify-center gap-6">
+                <span>© {añoActual} — {nombrePersonal}</span>
+                <span class="text-white/10">|</span>
+                <span class="hover:text-cyan-500 transition-colors cursor-crosshair">Venezuela — Global</span>
             </div>
             
-            <div class="flex items-center gap-2 group">
-                <div class="p-1.5 rounded-md bg-white/5 group-hover:bg-cyan-500/10 transition-colors">
-                    <Send size={10} class="text-gray-600 group-hover:text-cyan-400 transition-colors" />
-                </div>
-                <span class="text-gray-600 group-hover:text-gray-300 text-[9px] font-mono uppercase tracking-[0.4em] transition-colors italic">
-                    Pixel Perfect Development
-                </span>
+            <div class="flex items-center gap-4">
+                <span class="text-gray-800 text-[10px] font-mono uppercase tracking-[0.6em]">Pixel Perfect Design</span>
             </div>
         </div>
     </div>
 </footer>
 
 <style>
-    footer {
-        /* Asegura que el footer se sienta parte de la misma profundidad que el resto */
-        box-shadow: 0 -20px 50px -20px rgba(0,0,0,0.5);
+    /* Importante: Añadir esta línea al principio */
+    @reference "../styles/global.css";; 
+
+    .marquee {
+        animation: marquee 30s linear infinite;
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .social-icon {
+        @apply p-4 rounded-2xl bg-white/3 border border-white/10 text-gray-500 hover:text-white hover:border-cyan-500/50 hover:scale-110 transition-all duration-300;
+    }
+
+    .status-card {
+        perspective: 1000px;
+        transform-style: preserve-3d;
     }
 </style>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initFooter() {
+        // Animación de aparición por partes
+        gsap.from(".footer-reveal", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: "#main-footer",
+                start: "top 80%",
+            }
+        });
+
+        // Efecto 3D sutil en la Card de Status
+        const card = document.querySelector('.status-card');
+        card?.addEventListener('mousemove', (e: any) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            
+            const dx = x - xc;
+            const dy = y - yc;
+            
+            gsap.to(card, {
+                rotateY: dx / 20,
+                rotateX: -dy / 20,
+                duration: 0.5
+            });
+        });
+
+        card?.addEventListener('mouseleave', () => {
+            gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.5 });
+        });
+    }
+
+    document.addEventListener('astro:page-load', initFooter);
+    initFooter();
+</script>

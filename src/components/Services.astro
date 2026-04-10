@@ -1,203 +1,213 @@
 ---
 import { 
   Code2, BookOpen, Settings2, MonitorCog,
-  DownloadCloud, Layout, ArrowUpRight
+  DownloadCloud, Layout, ArrowUpRight, Mail, MessageSquare, X
 } from 'lucide-astro';
 
-const services = [
-    {
-        title: "Catálogos Digitales",
-        category: "Web",
-        description: "Experiencias interactivas para mostrar tus productos con enlaces de compra directos.",
-        icon: BookOpen,
-        color: "text-cyan-400",
-        bgGlow: "bg-cyan-500/10",
-        borderActive: "border-cyan-500/50",
-        whatsappMsg: "Hola! Me interesa información sobre los Catálogos Digitales."
-    },
-    {
-        title: "Webs & Portafolios",
-        category: "Web",
-        description: "Sitios de alto impacto visual diseñados para convertir y posicionar tu marca personal.",
-        icon: Layout,
-        color: "text-pink-500",
-        bgGlow: "bg-pink-500/10",
-        borderActive: "border-pink-500/50",
-        whatsappMsg: "Hola! Quisiera cotizar una página web o portafolio."
-    },
-    {
-        title: "Soporte Técnico IT",
-        category: "Tech",
-        description: "Resolución de errores, configuración de redes y asistencia remota o presencial.",
-        icon: Settings2,
-        color: "text-emerald-400",
-        bgGlow: "bg-emerald-500/10",
-        borderActive: "border-emerald-500/50",
-        whatsappMsg: "Hola! Necesito soporte técnico para mi equipo."
-    },
-    {
-        title: "Mantenimiento PC",
-        category: "Tech",
-        description: "Optimización profunda y limpieza de hardware para recuperar la velocidad de tu PC.",
-        icon: MonitorCog,
-        color: "text-blue-400",
-        bgGlow: "bg-blue-500/10",
-        borderActive: "border-blue-500/50",
-        whatsappMsg: "Hola! Quisiera agendar un mantenimiento para mi PC."
-    },
-    {
-        title: "Software & OS",
-        category: "Tech",
-        description: "Instalación limpia de Windows, Office y herramientas profesionales sin errores.",
-        icon: DownloadCloud,
-        color: "text-purple-400",
-        bgGlow: "bg-purple-500/10",
-        borderActive: "border-purple-500/50",
-        whatsappMsg: "Hola! Necesito ayuda instalando software o un sistema operativo."
-    },
-    {
-        title: "Landing Pages",
-        category: "Web",
-        description: "Estructuras de una sola página optimizadas para campañas de ventas específicas.",
-        icon: Code2,
-        color: "text-yellow-400",
-        bgGlow: "bg-yellow-500/10",
-        borderActive: "border-yellow-500/50",
-        whatsappMsg: "Hola! Me interesa una Landing Page para mi negocio."
-    }
-];
+const phone = import.meta.env.PUBLIC_WHATSAPP_NUMBER || "584240000000";
 
-const whatsappBase = "https://wa.me/584240000000?text=";
+const services = [
+    { title: "Catálogos Digitales", category: "Web", icon: BookOpen, color: "text-cyan-400", bgGlow: "#22d3ee" },
+    { title: "Webs & Portafolios", category: "Web", icon: Layout, color: "text-pink-500", bgGlow: "#ec4899" },
+    { title: "Soporte Técnico IT", category: "Tech", icon: Settings2, color: "text-emerald-400", bgGlow: "#10b981" },
+    { title: "Mantenimiento PC", category: "Tech", icon: MonitorCog, color: "text-blue-400", bgGlow: "#60a5fa" },
+    { title: "Software & OS", category: "Tech", icon: DownloadCloud, color: "text-purple-400", bgGlow: "#a855f7" },
+    { title: "Landing Pages", category: "Web", icon: Code2, color: "text-yellow-400", bgGlow: "#eab308" }
+];
 ---
 
-<section class="py-32 px-4 sm:px-6 lg:px-8 bg-[#0a0a0b] relative overflow-hidden" id="services-section">
-    <div class="absolute top-0 right-0 w-125 h-125 bg-cyan-500/5 blur-[120px] rounded-full pointer-events-none anim-glow-bg"></div>
-    <div class="absolute bottom-0 left-0 w-125 h-125 bg-purple-500/5 blur-[120px] rounded-full pointer-events-none anim-glow-bg"></div>
+<section class="py-24 px-4 sm:px-6 relative overflow-hidden bg-transparent" id="services-section">
+    <div class="absolute inset-0 pointer-events-none opacity-20">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] liquid-glow"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-[120px] liquid-glow"></div>
+    </div>
 
-    <div class="max-w-7xl mx-auto relative z-10">
-        <div class="mb-24 space-y-4" id="services-header">
-            <div class="flex items-center gap-3 overflow-hidden">
-                <span class="w-12 h-px bg-cyan-500 anim-line"></span>
-                <span class="text-cyan-500 font-mono text-[10px] uppercase tracking-[0.5em] anim-tag">Especialidades</span>
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-4 overflow-hidden" id="services-header">
+            <div class="space-y-2">
+                <div class="flex items-center gap-3 anim-service-item">
+                    <span class="w-8 h-px bg-cyan-500"></span>
+                    <span class="text-cyan-500 font-mono text-[10px] uppercase tracking-[0.4em]">Especialidades</span>
+                </div>
+                <h2 class="text-white text-4xl md:text-6xl font-black uppercase tracking-tighter anim-service-item">
+                    Soluciones <span class="text-outline text-transparent not-italic opacity-30">Expertas.</span>
+                </h2>
             </div>
-            <h2 class="text-white text-5xl md:text-7xl font-black tracking-tighter uppercase italic anim-title leading-none">
-                Servicios <span class="text-white/10">Expertos</span>
-            </h2>
+            <p class="text-gray-500 text-[11px] max-w-60 font-light italic leading-relaxed border-l border-white/10 pl-4 anim-service-item">
+                Infraestructura y diseño de alto rendimiento para marcas digitales.
+            </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10" id="services-grid">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 perspective-1000" id="services-grid">
             {services.map((service) => (
-                <div class={`service-card group relative p-px rounded-[2.5rem] bg-white/5 border border-white/10 transition-all duration-500 hover:scale-[1.02] hover:${service.borderActive}`}>
-                    <div class={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl ${service.bgGlow} pointer-events-none`}></div>
-                    <div class="relative z-10 p-10 flex flex-col h-full bg-[#111112]/90 backdrop-blur-xl rounded-[calc(2.5rem-1px)] overflow-hidden">
-                        <div class="flex justify-between items-start mb-10">
-                            <div class={`p-4 rounded-2xl bg-white/5 border border-white/10 shadow-2xl transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 ${service.color}`}>
-                                <service.icon size={32} strokeWidth={1.5} />
+                <div class="service-card-wrapper h-full anim-service-item">
+                    <button 
+                        data-service={service.title}
+                        class="service-btn service-card group relative block w-full text-left p-px rounded-3xl bg-white/5 border border-white/10 no-underline transition-all duration-500"
+                        style={`--glow-color: ${service.bgGlow}`}
+                    >
+                        <div class="relative z-10 p-8 flex flex-col h-full bg-[#0d0d0f]/80 backdrop-blur-2xl rounded-[calc(1.8rem-1px)] overflow-hidden">
+                            <div class="absolute inset-0 bg-linear-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            
+                            <div class="flex justify-between items-start mb-10 relative z-20">
+                                <div class="p-4 rounded-xl bg-white/5 border border-white/10 transition-all duration-500 sm:group-hover:scale-110 sm:group-hover:-rotate-3 icon-box">
+                                    <service.icon size={26} class={`${service.color}`} strokeWidth={1.5} />
+                                </div>
+                                <ArrowUpRight size={18} class="text-white/20 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                             </div>
-                            <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
-                                {service.category}
-                            </span>
+
+                            <div class="space-y-1 mt-auto relative z-20">
+                                <span class="text-[10px] font-mono text-gray-500 uppercase tracking-widest block">{service.category}</span>
+                                <h3 class="text-white text-2xl font-bold tracking-tight uppercase group-hover:text-white transition-colors">
+                                    {service.title}
+                                </h3>
+                            </div>
                         </div>
-                        <h3 class="text-white text-2xl font-bold mb-4 tracking-tight group-hover:text-cyan-300 transition-colors uppercase">
-                            {service.title}
-                        </h3>
-                        <p class="text-gray-400 text-sm leading-relaxed font-light mb-10 grow italic opacity-80 group-hover:opacity-100 transition-opacity">
-                            {service.description}
-                        </p>
-                        <a 
-                            href={`${whatsappBase}${encodeURIComponent(service.whatsappMsg)}`}
-                            target="_blank"
-                            class={`inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all no-underline ${service.color} lg:text-gray-400 lg:group-hover:${service.color}`}
-                        >
-                            <span>Consultar Ahora</span>
-                            <div class="p-2.5 rounded-full bg-white/5 group-hover:bg-current transition-all duration-300">
-                                <ArrowUpRight size={14} class="group-hover:text-black transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                            </div>
-                        </a>
-                    </div>
+                    </button>
                 </div>
             ))}
+        </div>
+    </div>
+
+    <div id="contact-modal" class="fixed inset-0 z-200 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/95 backdrop-blur-xl" id="modal-overlay"></div>
+        <div class="relative w-full max-w-sm bg-[#0d0d0f] border border-white/10 rounded-[2.5rem] p-8 shadow-2xl scale-90 transition-transform duration-300" id="modal-content">
+            <button class="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors" id="close-modal">
+                <X size={20} />
+            </button>
+            <div class="text-center mb-8">
+                <span class="text-cyan-500 font-mono text-[9px] uppercase tracking-[0.4em] block mb-2">Canal de atención</span>
+                <h4 id="modal-service-title" class="text-white text-2xl font-black uppercase tracking-tighter">Servicio</h4>
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+                <a id="link-whatsapp" target="_blank" class="flex items-center justify-between p-5 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 hover:bg-emerald-500/10 hover:border-emerald-500/40 transition-all group">
+                    <div class="flex items-center gap-4">
+                        <MessageSquare class="text-emerald-500" size={24} />
+                        <span class="text-white font-bold text-sm uppercase tracking-widest">WhatsApp</span>
+                    </div>
+                    <ArrowUpRight size={16} class="text-emerald-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </a>
+                <button id="btn-go-to-contact" class="flex items-center justify-between p-5 rounded-2xl bg-blue-500/5 border border-blue-500/20 hover:bg-blue-500/10 hover:border-blue-500/40 transition-all group w-full text-left">
+                    <div class="flex items-center gap-4">
+                        <Mail class="text-blue-500" size={24} />
+                        <span class="text-white font-bold text-sm uppercase tracking-widest">Correo / Form</span>
+                    </div>
+                    <ArrowUpRight size={16} class="text-blue-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </button>
+            </div>
         </div>
     </div>
 </section>
 
 <style>
-    .service-card {
-        will-change: transform, opacity;
-        opacity: 0; /* Estado inicial para evitar parpadeo */
+    .text-outline { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); }
+    .service-card { transform-style: preserve-3d; will-change: transform, opacity, box-shadow; }
+    #contact-modal.active { opacity: 1; pointer-events: auto; }
+    #contact-modal.active #modal-content { transform: scale(1); }
+    .liquid-glow { animation: move 12s ease-in-out infinite; }
+    @keyframes move {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(30px, -30px) scale(1.1); }
     }
-    .text-white\/10 { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05); }
 </style>
+
+<script define:vars={{ phone }}>
+    const modal = document.getElementById('contact-modal');
+    const modalTitle = document.getElementById('modal-service-title');
+    const linkWhatsapp = document.getElementById('link-whatsapp');
+    const btnGoContact = document.getElementById('btn-go-to-contact');
+    const closeBtn = document.getElementById('close-modal');
+    const overlay = document.getElementById('modal-overlay');
+
+    window.openServiceModal = (serviceName) => {
+        const message = encodeURIComponent(`Hola Jorge! Me interesa información sobre: ${serviceName}`);
+        modalTitle.innerText = serviceName;
+        linkWhatsapp.href = `https://wa.me/${phone}?text=${message}`;
+        btnGoContact.dataset.selectedService = serviceName;
+        modal.classList.add('active');
+    };
+
+    const closeModal = () => modal.classList.remove('active');
+    closeBtn?.addEventListener('click', closeModal);
+    overlay?.addEventListener('click', closeModal);
+</script>
 
 <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
-    gsap.registerPlugin(ScrollTrigger);
+    import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-    function init() {
-        // 1. Limpiar todo rastro de animaciones anteriores
-        ScrollTrigger.getAll().forEach(st => st.kill());
+    gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        // 2. Animación Header (Ida y Vuelta)
-        const header = document.querySelector("#services-header");
-        if(header) {
-            gsap.fromTo(header.querySelectorAll(".anim-line, .anim-tag, .anim-title"), 
-                { y: 50, opacity: 0 },
-                {
-                    y: 0, opacity: 1,
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: header,
-                        start: "top 95%",
-                        end: "top 75%",
-                        scrub: 1,
-                        toggleActions: "play reverse play reverse",
-                    }
-                }
-            );
-        }
+    function initServices() {
+        // --- 1. ANIMACIÓN DE ENTRADA/SALIDA COHERENTE ---
+        gsap.from(".anim-service-item", {
+            y: 80,
+            opacity: 0,
+            scale: 0.9,
+            filter: "blur(15px)",
+            duration: 1,
+            stagger: 0.1,
+            ease: "expo.out",
+            scrollTrigger: {
+                trigger: "#services-section",
+                start: "top 80%", // Dispara un poco antes para fluidez
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse",
+            }
+        });
 
-        // 3. Animación de Tarjetas (Ida y Vuelta Real)
-        const cards = document.querySelectorAll(".service-card");
-        cards.forEach((card) => {
-            gsap.fromTo(card, 
-                { 
-                    y: 100, 
-                    opacity: 0, 
-                    scale: 0.9,
+        // --- 2. LOGICA DE INTERACCIÓN ---
+        document.querySelectorAll('.service-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const service = btn.getAttribute('data-service');
+                (window as any).openServiceModal(service);
+            });
+        });
+
+        const btnGoContact = document.getElementById('btn-go-to-contact');
+        btnGoContact?.addEventListener('click', () => {
+            document.getElementById('contact-modal')?.classList.remove('active');
+            
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: {
+                    y: "#contact-section",
+                    autoKill: false
                 },
-                {
-                    y: 0, 
-                    opacity: 1, 
-                    scale: 1,
-                    scrollTrigger: {
-                        trigger: card,
-                        start: "top 100%", // Empieza al asomar
-                        end: "top 70%",   // Se completa rápido
-                        scrub: 1,
-                        // El secreto: play al bajar, reverse al subir
-                        toggleActions: "play reverse play reverse",
-                        invalidateOnRefresh: true,
-                    }
-                }
-            );
+                ease: "power4.inOut"
+            });
+
+            const subjectField = document.querySelector('input[name="asunto"]');
+            if (subjectField) {
+                (subjectField as HTMLInputElement).value = `Consulta: ${btnGoContact.dataset.selectedService}`;
+            }
         });
 
-        // 4. Animación de los Glows de fondo (Bucle infinito independiente)
-        gsap.to(".anim-glow-bg", {
-            y: "random(-50, 50)",
-            x: "random(-30, 30)",
-            duration: 5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut"
-        });
-
-        ScrollTrigger.refresh();
+        // --- 3. TILT 3D ---
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            document.querySelectorAll(".service-card-wrapper").forEach((wrapper) => {
+                const card = wrapper.querySelector(".service-card");
+                wrapper.addEventListener("mousemove", (e: any) => {
+                    const rect = wrapper.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(card, { rotateY: x * 0.08, rotateX: -y * 0.08, scale: 1.02, duration: 0.5 });
+                });
+                wrapper.addEventListener("mouseleave", () => {
+                    gsap.to(card, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.7 });
+                });
+            });
+        }
     }
 
-    // Asegurar ejecución en cambios de página de Astro
-    document.addEventListener('astro:page-load', init);
-    // Ejecución inicial
-    init();
+    // Ejecutar con un pequeño delay para asegurar que el DOM y el Hero estén listos
+    document.addEventListener("astro:page-load", () => {
+        setTimeout(initServices, 50);
+    });
+    
+    // Fallback carga inicial
+    if (document.readyState !== 'loading') {
+        setTimeout(initServices, 50);
+    }
 </script>
